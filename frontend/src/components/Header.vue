@@ -1,15 +1,11 @@
 <template>
-  <header>
-
-  </header>
+  <header></header>
 </template>
 
 <script>
 export default {
-  name: "Header",
-}
+  name: "Header"
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -13,9 +13,10 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
   routes: [
-    { // Me permet d'indiquer directement login dans l'url quand on se connecte au site
+    {
+      // Me permet d'indiquer directement login dans l'url quand on se connecte au site
       path: "/",
-      redirect: { name: "Login"}
+      redirect: { name: "Login" }
     },
     {
       path: "/login",
@@ -53,7 +54,6 @@ const router = new VueRouter({
       component: AccountPosts
     }
   ]
-})
-
+});
 
 export default router;
