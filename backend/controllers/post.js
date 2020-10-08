@@ -47,9 +47,9 @@ exports.myPosts = (req, res) => {
     if (req.params.userId) {
         conn.query('SELECT * FROM posts WHERE userId=?', [req.params.userId], function(error, result) {
             if (error) return res.status(404).json({ error : error })
-            conn.query(`SELECT * FROM commentaries WHERE postId=?`, [result.id], function(err,resultat) {
+            conn.query(`SELECT * FROM commentaries WHERE postId=?`, [result[0].id], function(err,resultat) {
                 if (err) return res.status(500).json({ error : err });
-                conn.query(`SELECT * FROM likes WHERE postId=?`, [result.id], function(errs,resultats) {
+                conn.query(`SELECT * FROM likes WHERE postId=?`, [result[0].id], function(errs,resultats) {
                     if (errs) return res.status(500).json({ error : errs });
                     return res.status(200).json({ post : result,
                                                   commentaires : resultat,

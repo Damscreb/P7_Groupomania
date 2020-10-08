@@ -1,30 +1,59 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
+import Signup from "../views/Signup.vue";
+import Posts from "../views/Posts.vue";
+import Post from "../views/Post.vue";
+import AccountPassword from "../views/AccountPassword.vue";
+import AccountPosts from "../views/AccountPosts.vue";
+import Settings from "../views/Settings.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
-];
-
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
-  routes
-});
+  routes: [
+    { // Me permet d'indiquer directement login dans l'url quand on se connecte au site
+      path: "/",
+      redirect: { name: "Login"}
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: Login
+    },
+    {
+      path: "/signup",
+      name: "Signup",
+      component: Signup
+    },
+    {
+      path: "/posts",
+      name: "Posts",
+      component: Posts
+    },
+    {
+      path: "/post/:id",
+      name: "Post",
+      component: Post
+    },
+    {
+      path: "/settings",
+      name: "Settings",
+      component: Settings
+    },
+    {
+      path: "/settings/password",
+      name: "AccountPassword",
+      component: AccountPassword
+    },
+    {
+      path: "/settings/posts",
+      name: "AccountPosts",
+      component: AccountPosts
+    }
+  ]
+})
+
 
 export default router;

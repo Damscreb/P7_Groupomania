@@ -8,7 +8,7 @@ const postCtrl = require('../controllers/post');
 
 router.get('/', auth, postCtrl.getAllPosts); // IS OK
 router.get('/:id', auth, postCtrl.getOnePost); // IS OK
-router.get('/user/:userId/posts', auth, postCtrl.myPosts); // à tester
+router.get('/:userId/posts', auth, postCtrl.myPosts); // IS OK
 router.put('/:id', auth, multer, postCtrl.modifyPost); // IS NOK je sais pas pk
 router.delete('/:id', auth, postCtrl.deletePost); // IS OK
 router.post('/:id/like', auth, postCtrl.likePost); // IS OK
