@@ -29,10 +29,13 @@ export default {
     }    
   },
   // Ici, lorsque nos composants sont créés, on vérifie si ce sont des inputs pour des passwords
-  // Si c'est le cas, on donne type="password" à l'input en question
+  // Si c'est le cas, on donne type="password" à l'input en question, de même pour email
   mounted() {
     if (this.$props.idLinked === "Password") {
-      this.$el.firstChild.type = "password";
+      this.$el.firstChild.type = "password"
+    }
+    if (this.$props.idLinked === "Email") {
+      this.$el.firstChild.type = "email"
     }
   }
 }
