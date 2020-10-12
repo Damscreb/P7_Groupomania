@@ -8,21 +8,13 @@
           <h1 class="mb-5">Rejoignez le réseau social interne, moderne et ludique !</h1>
           <form @submit.prevent="onSubmit">
 
-            <p>
-              <input id="email" v-model="email" placeholder="Email" class="full-width">
-            </p>
+            <FormInput idLinked="Email" v-model="email"/>
 
-            <p>
-              <input id="firstName" v-model="firstName" placeholder="First Name" class="full-width">
-            </p>
+            <FormInput idLinked="FirstName" v-model="firstName"/>
 
-            <p>
-              <input id="lastName" v-model="lastName" placeholder="Last Name" class="full-width">
-            </p>
+            <FormInput idLinked="LastName" v-model="lastName"/>
 
-            <p class="mb-5">
-              <input id="password" v-model="password" placeholder="Password" class="full-width">
-            </p>
+            <FormInput idLinked="Password" v-model="password" class="mb-5"/>
 
             <p>
               <input type="submit" value="Submit" class="btn btn-light border mb-3">  

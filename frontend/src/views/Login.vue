@@ -5,19 +5,17 @@
       <div class="row thirdty-width mb-4">
         <div class="col border border-light bg-black">
           <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
+          <h2 class="text-light mb-5">Connectez-vous !</h2>
           <form @submit.prevent="onSubmit">
 
-            <p>
-              <input id="email" v-model="email" placeholder="Email" class="full-width">
-            </p>
+            <FormInput idLinked="Email" v-model="email"/>
 
-            <p class="mb-5">
-              <input id="password" v-model="password" placeholder="Password" class="full-width">
-            </p>
-
+            <FormInput idLinked="Password" v-model="password" class="mb-5"/>
+            
             <p>
               <input type="submit" value="Submit" class="btn btn-light border mb-3">  
             </p>
+            
           </form>
         </div>
       </div>
@@ -39,13 +37,17 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+h2 {
+  font-size: 18px
+}
 
 .bg-darker {
   background-color: rgb(5%, 6%, 6%);
