@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-darker big-height">
+  <div class="bg-darker big-height pb-5">
     <Header/>
 
     <div class="container">

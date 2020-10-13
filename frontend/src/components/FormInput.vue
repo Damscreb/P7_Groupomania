@@ -4,6 +4,7 @@
           v-model="input" 
           :placeholder=idLinked 
           class="full-width" 
+          required
           @input="sendData"> 
   </p>
 </template>

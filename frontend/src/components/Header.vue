@@ -1,7 +1,7 @@
 <template>
-  <header class="border border-light d-flex flex-row justify-content-between pr-3">
+  <header class="border border-light d-flex flex-row justify-content-between pr-3 mb-4">
 
-    <!-- Le logo qui permet de retourner à /posts -->
+    <!-- Le logo qui permettra de retourner à /posts -->
     <img src="@/assets/icon.png" width="90px" class="logo" />
 
 
@@ -11,8 +11,10 @@
         <img src="@/assets/icon-account.png" />
       </a>
       
-      <MessageRouter msg="+ Upload" route="settings/posts" class="my-auto btn-upload p-2"></MessageRouter>
-
+      <button class="my-auto btn-upload">         
+        <MessageRouter msg="+ Upload" route="/settings/posts" class="my-auto p-2">
+        </MessageRouter>
+      </button>
     </div>
 
   </header>

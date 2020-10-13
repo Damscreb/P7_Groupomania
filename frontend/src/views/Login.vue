@@ -13,7 +13,7 @@
             <FormInput idLinked="Password" v-model="password" class="mb-5"/>
             
             <p>
-              <input type="submit" value="Submit" class="btn btn-light border mb-3">  
+              <input type="submit" value="Se connecter" class="btn btn-light border mb-3">  
             </p>
             
           </form>
@@ -58,7 +58,8 @@ h2 {
 }
 
 .thirdty-width {
-  width:30%
+  width:30%;
+  box-shadow: 1px 1px 12px #555;
 }
 
 .full-width {
@@ -67,10 +68,6 @@ h2 {
 
 .big-height {
   height: 100%
-}
-
-input {
-  font-size: 13px
 }
 
 </style>
