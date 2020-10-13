@@ -6,10 +6,10 @@
       <button>Delete</button> 
     </div>
     
-    <img :src=image  alt="Image du post" class="p-3"/>
+    <img :src=image  alt="Image du post" class="p-3 not-too-big m-auto"/>
 
-    <div class="d-flex flex-row justify-content-between"> <!-- Une div pour heure date à gauche, un pour les pouces à droites, ou inversement à voir -->
-      <div class="pr-3 ml-auto d-flex flex-column align-items-start">
+    <div class="d-flex flex-row justify-content-between"> <!-- Une div pour heure date à froite, un pour les pouces à gauche -->
+      <div class="pr-3 ml-auto d-flex flex-column align-items-end">
         <p>Date : {{date.split('T')[0]}}</p>
         <p>Heure : {{date.split('T')[1].split('.')[0]}}</p>
       </div>
@@ -41,5 +41,11 @@ export default {
 <style scoped lang="scss">
 p {
   margin:0;
+}
+
+.not-too-big {
+  max-height: 900px;
+  max-width: 890px;
+  background-position : center center;
 }
 </style>

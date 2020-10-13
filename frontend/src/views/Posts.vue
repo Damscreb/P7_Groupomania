@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-darker big-height pb-5">
+  <div class="bg-darker pb-5">
     <Header/>
 
-    <div class="container eighty-width">
+    <div class="container fifty-width">
       <PostWall v-for="post in posts"
             :key="post.postId"
             :image="post.imageUrl"
@@ -23,14 +23,18 @@ export default {
   },
   mounted () {
     this.$axios
-      .get('/posts')
+      .get('/posts', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
       .then(response => (this.posts = response.data.result))
   }
 }
 </script>
 
 <style>
-.eighty-width {
-  width: 80%
+.fifty-width {
+  width: 50%
 }
 </style>

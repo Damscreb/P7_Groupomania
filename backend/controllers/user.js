@@ -33,7 +33,7 @@ exports.login = (req, res, next) => {
                           { expiresIn: '24h' } )
           conn.query(`UPDATE users SET lastUpdate=now() WHERE id = ?`, [response[0].id]);
           return res.status(200).send({
-            msg: 'Logged in!',
+            msg: "Connexion réussie!",
             token,
             user: response[0]
           });

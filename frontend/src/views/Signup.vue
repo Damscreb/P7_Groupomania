@@ -6,7 +6,7 @@
         <div class="col border border-light bg-black">
           <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
           <h1 class="mb-5">Rejoignez le réseau social interne, moderne et ludique !</h1>
-          <form @submit.prevent="onSubmit">
+          <form @submit="createAccount">
 
             <FormInput idLinked="Email" v-model="email"/>
 
@@ -43,6 +43,20 @@ export default {
       firstName: "",
       lastName: "",
       password: ""
+    }
+  },
+  methods: {
+    createAccount(e) {
+      e.preventDefault()
+      this.$axios
+        .post('/auth/signup', {
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          password: this.password
+        })
+        .then(response => { this.$router.push({ name: 'Login' }) })
+        
     }
   }
 }

@@ -3,17 +3,27 @@
     <div class="container d-flex align-items-center flex-column my-5">
 
       <div class="row thirdty-width mb-4">
-        <div class="col border border-light bg-black">
+        <div class="col border border-light bg-black text-light ">
+
           <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
-          <h2 class="text-light mb-5">Connectez-vous !</h2>
-          <form @submit.prevent="onSubmit">
+          <h2 class="mb-5"
+              v-if="messageConnection === null">
+              Connectez-vous !
+          </h2>
+          <h2 class="mb-5" v-else>{{ messageConnection }}</h2>
+
+          <form @submit="connection">
+
+
 
             <FormInput idLinked="Email" v-model="email"/>
 
             <FormInput idLinked="Password" v-model="password" class="mb-5"/>
             
             <p>
-              <input type="submit" value="Se connecter" class="btn btn-light border mb-3">  
+              <input type="submit" 
+                     value="Se connecter" 
+                     class="btn btn-light border mb-3">  
             </p>
             
           </form>
@@ -38,6 +48,27 @@ export default {
     return {
       email: "",
       password: "",
+      messageConnection: null,
+      userId: ""
+    }
+  },
+  methods: {
+    connection(e) {
+      e.preventDefault()
+      this.$axios
+        .post('/auth/login', {
+          email: this.email,
+          password: this.password
+        })
+        .then(response => {localStorage.setItem("token", response.data.token),
+                          localStorage.setItem("userId", response.data.user.id),
+                          localStorage.setItem("role", response.data.user.role),
+                          localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
+                          this.messageConnection = response.data.msg,
+                          this.$router.push({ name: 'Posts' })                   
+                          })
+        .catch(error => this.messageConnection = "Identifiants erronés")
+        
     }
   }
 }
@@ -67,7 +98,7 @@ h2 {
 }
 
 .big-height {
-  height: 100%
+  height:100%;
 }
 
 </style>
