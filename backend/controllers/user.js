@@ -7,18 +7,60 @@ var conn = require('../mySqlConfig');
 
 exports.signup = (req, res, next) => {
   if (req.body.firstName && req.body.lastName && req.body.email && req.body.password) {
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
+    bcrypt.hash(req.body.password, 10, (nok, hash) => {
+      if (nok) return res.status(500).json({ error : nok })
       // Maintenant, on a notre hash en promise
       const time = new Date();
       conn.query(`INSERT INTO users (firstName, lastName, email, password, role, dateInscription, lastUpdate) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)`, [req.body.firstName, req.body.lastName, req.body.email, hash, "basic", time, time], 
-        function(err) {
-          if (err) return res.status(500).json({ error : err });
+        function(err, response) {
+          if (err) return res.status(500).json({ error : err })
+          conn.query(`SELECT * FROM users WHERE password=?`, [hash], function(error, result) {
+            if (error) return res.status(500).json({ error : error });
+            bcrypt.compare(req.body.password, result[0].password, function(noresultat, resultat) {
+              if (noresultat) return res.status(500).json({ error : noreultat })
+              if (resultat) {
+                const token = jwt.sign(
+                                { userId: result[0].id },
+                                process.env.TOKEN,
+                                { expiresIn: '24h' } )
+                conn.query(`UPDATE users SET lastUpdate=now() WHERE id = ?`, [result[0].id]);
+                return res.status(200).send({
+                  msg: "Connexion réussie!",
+                  token,
+                  user: result[0]
+                });
+              }
+              else {
+                return res.status(400).json({ message: "Invalid Password" });
+              }
+            })
+          })
         }
       )
     })
-    return res.status(200).json({ message : 'Utilisateur enregistré'});
   }
+//   conn.query(`SELECT * FROM users WHERE password=?`, [passwordHashed], function(err, response) {
+//     if (err) return res.status(500).json({ error : err });
+//     console.log(response)
+//     bcrypt.compare(req.body.password, passwordHashed, function(result) {
+//       if(result) {
+//         const token = jwt.sign(
+//                         { userId: response[0].id },
+//                         process.env.TOKEN,
+//                         { expiresIn: '24h' } )
+//         conn.query(`UPDATE users SET lastUpdate=now() WHERE id = ?`, [response[0].id]);
+//         return res.status(200).send({
+//           msg: "Connexion réussie!",
+//           token,
+//           user: response[0]
+//         });
+//       }
+//       else {
+//         return res.status(400).json({ message: "Invalid Password" });
+//       }
+//     })
+//   })
 };
 
 exports.login = (req, res, next) => {

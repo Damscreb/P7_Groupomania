@@ -55,22 +55,14 @@ export default {
         password: this.password
       })
       .then((response) => {
-        console.log(response.config.data)
-        return this.$axios.post('/auth/login', {
-          email: response.config.data.email,
-          password: response.config.data.password
-        })
+        sessionStorage.setItem("token", response.data.token),
+        localStorage.setItem("userId", response.data.user.id),
+        localStorage.setItem("role", response.data.user.role),
+        localStorage.setItem("name", response.data.user.firstName + "_" + response.data.user.lastName),
+        this.messageConnection = response.data.msg        
       })
-      .then((responses) => {
-        console.log("Login en test")
-        console.log(responses)
-        sessionStorage.setItem("token", responses.data.token),
-        localStorage.setItem("userId", responses.data.user.id),
-        localStorage.setItem("role", responses.data.user.role),
-        localStorage.setItem("name", responses.data.user.firstName + "_" + responses.data.user.lastName),
-        this.messageConnection = responses.data.msg,
-        this.$router.push({ name: 'Posts' }) 
-      });
+      // On change de route après coup histoire de bien enregistrer le token avant de faire la requête suivante (getPosts)
+      this.$router.push({ name: 'Posts' }) ;
     }
   }    
 }
