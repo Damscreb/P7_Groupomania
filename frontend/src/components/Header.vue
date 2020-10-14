@@ -2,14 +2,17 @@
   <header class="border border-light d-flex flex-row justify-content-between pr-3 mb-4">
 
     <!-- Le logo qui permettra de retourner à /posts -->
-    <img src="@/assets/icon.png" width="90px" class="logo" />
-
+    <div>
+      <router-link to="/posts">
+        <img src="@/assets/icon.png" width="90px" class="logo" />
+      </router-link>
+    </div>
 
     <!-- L'avatar + upload à droite pour aller sur son compte ou createpost -->
     <div id="rightSide" class="d-flex flex-row my-auto">
-      <a class="mr-4">
+      <router-link to="/settings" class="mr-4">
         <img src="@/assets/icon-account.png" />
-      </a>
+      </router-link>
       
       <button class="my-auto btn-upload">         
         <MessageRouter msg="+ Upload" route="/settings/posts" class="my-auto p-2">

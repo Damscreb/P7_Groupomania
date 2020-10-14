@@ -4,10 +4,15 @@
 
     <div class="container fifty-width">
       <PostWall v-for="post in posts"
-            :key="post.postId"
+            :key="post.id"
+            :postId="post.id"
             :image="post.imageUrl"
             :title="post.title"
-            :date="post.date">
+            :date="post.date"
+            :postUserId="post.userId"
+            :role="role"
+            :userId="userId">
+            <!-- @delete="restartPosts"> -->
       </PostWall>
     </div>
 
@@ -18,18 +23,23 @@
 export default {
   data () {
     return {
-      posts: []
+      posts: [],
+      users: [],
+      role: localStorage.getItem('role'),
+      userId: parseInt(localStorage.getItem('userId'))
     }
   },
   mounted () {
     this.$axios
-      .get('/posts', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      .then(response => (this.posts = response.data.result))
-  }
+      .get('/posts')
+      .then(response => (this.posts = response.data.post))
+  },
+  // methods: {
+  //   restartPosts() {
+  //     // J'aimerai recharger le fil d'actu : le composant Posts.vue
+  //     this.$router.push({ name: 'Posts' })
+  //   }
+  // }
 }
 </script>
 

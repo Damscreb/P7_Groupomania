@@ -5,17 +5,16 @@ var conn = require('../mySqlConfig');
 
 exports.getAllPosts = (req, res) => {
     conn.query('SELECT * FROM posts ORDER BY date DESC',
-    function(error, result) {
-        if (error) res.status(500).json({ error : error })
-        return res.status(200).json({ result })
-    }
+        function(error, result) {
+            if (error) res.status(500).json({ error : error })
+            return res.status(200).json({ post : result })
+        }
     )
 }
 
 // J'arrive à créer un post mais l'image ne se save pas, c'est parce que j'envoie juste une url et pas une image issue de mon ordi
 exports.createPost = (req, res) => {
     if (req.body.userId && req.body.title && req.body.imageUrl) {
-        const newUrl = req.body.imageUrl;
         const time = new Date();
         conn.query('INSERT INTO posts (userId, title, date, imageUrl) VALUES (?, ?, ?, ?)', [req.body.userId, req.body.title, time, req.body.imageUrl], function(error) {
             if (error) return res.status(500).json({ error : 'Mauvais arguments' });
