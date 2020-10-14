@@ -60,13 +60,14 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(response => {sessionStorage.setItem("token", response.data.token),
-                          localStorage.setItem("userId", response.data.user.id),
-                          localStorage.setItem("role", response.data.user.role),
-                          localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
-                          this.messageConnection = response.data.msg,
-                          this.$router.push({ name: 'Posts' })                   
-                          })
+        .then(response => {
+          sessionStorage.setItem("token", response.data.token),
+          localStorage.setItem("userId", response.data.user.id),
+          localStorage.setItem("role", response.data.user.role),
+          localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
+          this.messageConnection = response.data.msg,
+          this.$router.push({ name: 'Posts' })                   
+        })
         .catch(error => this.messageConnection = "Identifiants erronés")
         
     }

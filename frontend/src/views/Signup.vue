@@ -48,17 +48,31 @@ export default {
   methods: {
     createAccount(e) {
       e.preventDefault()
-      this.$axios
-        .post('/auth/signup', {
-          email: this.email,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          password: this.password
+      this.$axios.post('/auth/signup', {
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        password: this.password
+      })
+      .then((response) => {
+        console.log(response.config.data)
+        return this.$axios.post('/auth/login', {
+          email: response.config.data.email,
+          password: response.config.data.password
         })
-        .then(response => { this.$router.push({ name: 'Login' }) })
-        
+      })
+      .then((responses) => {
+        console.log("Login en test")
+        console.log(responses)
+        sessionStorage.setItem("token", responses.data.token),
+        localStorage.setItem("userId", responses.data.user.id),
+        localStorage.setItem("role", responses.data.user.role),
+        localStorage.setItem("name", responses.data.user.firstName + "_" + responses.data.user.lastName),
+        this.messageConnection = responses.data.msg,
+        this.$router.push({ name: 'Posts' }) 
+      });
     }
-  }
+  }    
 }
 </script>
 

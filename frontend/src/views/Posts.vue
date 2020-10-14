@@ -29,7 +29,7 @@ export default {
       userId: parseInt(localStorage.getItem('userId'))
     }
   },
-  mounted () {
+  beforeMount () {
     this.$axios
       .get('/posts')
       .then(response => (this.posts = response.data.post))

@@ -6,7 +6,9 @@
         <!-- On vérifie les conditions d'affichage du bouton delete -->
         <button v-if="role === 'admin' || postUserId===userId"
                 class="btn btn-light"
-                @click="deletePost">Delete</button> 
+                @click="deletePost">
+          Delete
+        </button> 
       </div>
       
       <router-link :to="route">
@@ -66,6 +68,7 @@ export default {
     deletePost() {
       this.$axios
         .delete(`/posts/${this.postId}`)
+        //.then(response => this.$router.push({ name: 'Posts' })) Marche pas
         .catch(error => this.message=error)
     }
   },
