@@ -8,16 +8,21 @@
       </router-link>
     </div>
 
+    <div class="my-auto pl-5">
+      <p class="text-light">{{ fullName }}</p>
+    </div>
+
     <!-- L'avatar + upload à droite pour aller sur son compte ou createpost -->
-    <div id="rightSide" class="d-flex flex-row my-auto">
+    <div id="rightSide" class="d-flex flex-row my-auto align-items-center">
       <router-link to="/settings" class="mr-4">
         <img src="@/assets/icon-account.png" />
       </router-link>
       
-      <button class="my-auto btn-upload">         
-        <MessageRouter msg="+ Upload" route="/settings/posts" class="my-auto p-2">
-        </MessageRouter>
-      </button>
+      <router-link to="/upload" >
+        <button class="my-auto btn-upload p-2">         
+          + Upload
+        </button>
+      </router-link>
     </div>
 
   </header>
@@ -25,7 +30,15 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data() {
+    return {
+      fullName: "",
+    }
+  },
+  mounted() {
+    this.fullName = localStorage.getItem("name").split('_')[0] + (' ') + localStorage.getItem("name").split('_')[1]
+  }
 };
 </script>
 
@@ -47,6 +60,15 @@ export default {
   border: 2px solid rgb(231, 186, 186);
   border-radius: 5px;
   background-color: rgb(100%, 84%, 84%);
+  &:hover {
+    background-color: darken(rgb(100%, 84%, 84%),5%);
+    border: 2px solid darken(rgb(231, 186, 186),10%);
+  }
 }
 
+p {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0;
+}
 </style>

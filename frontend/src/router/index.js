@@ -7,6 +7,7 @@ import Post from "../views/Post.vue";
 import AccountPassword from "../views/AccountPassword.vue";
 import AccountPosts from "../views/AccountPosts.vue";
 import Settings from "../views/Settings.vue";
+import NewPost from "../views/NewPost.vue";
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,11 @@ const router = new VueRouter({
       path: "/settings/posts",
       name: "AccountPosts",
       component: AccountPosts
+    },
+    {
+      path: "/upload",
+      name: "NewPost",
+      component: NewPost
     }
   ]
 });
