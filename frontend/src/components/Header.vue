@@ -38,6 +38,9 @@ export default {
   },
   mounted() {
     this.fullName = localStorage.getItem("name").split('_')[0] + (' ') + localStorage.getItem("name").split('_')[1]
+  },
+  destroyed() {
+    this.fullName= null;
   }
 };
 </script>

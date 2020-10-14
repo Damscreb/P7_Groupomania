@@ -58,11 +58,9 @@ export default {
         sessionStorage.setItem("token", response.data.token),
         localStorage.setItem("userId", response.data.user.id),
         localStorage.setItem("role", response.data.user.role),
-        localStorage.setItem("name", response.data.user.firstName + "_" + response.data.user.lastName),
-        this.messageConnection = response.data.msg        
+        localStorage.setItem("name", response.data.user.firstName + "_" + response.data.user.lastName), 
+        this.$router.push({ name: 'Posts' }) ;  
       })
-      // On change de route après coup histoire de bien enregistrer le token avant de faire la requête suivante (getPosts)
-      this.$router.push({ name: 'Posts' }) ;
     }
   }    
 }
