@@ -3,7 +3,7 @@
     <input :id=idLinked 
           v-model="input" 
           :placeholder=idLinked 
-          class="full-width" 
+          class="full-width"
           required
           @input="sendData"> 
   </p>
@@ -44,9 +44,12 @@ export default {
 
 <style lang="scss" scoped>
 
+.full-width {
+  width: 100%
+}
+
 input {
   font-size: 13px;
-  width: 80%
 }
 
 </style>

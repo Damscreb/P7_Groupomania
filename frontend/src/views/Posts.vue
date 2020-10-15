@@ -29,11 +29,14 @@ export default {
       userId: parseInt(localStorage.getItem('userId'))
     }
   },
-  beforeMount () {
+  mounted() {
     this.$axios
       .get('/posts')
       .then(response => (this.posts = response.data.post))
   },
+  destroyed() {
+    this.users= []
+  }
   // methods: {
   //   restartPosts() {
   //     // J'aimerai recharger le fil d'actu : le composant Posts.vue
@@ -43,7 +46,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 .fifty-width {
   width: 50%
 }

@@ -5,7 +5,7 @@
         <h3>{{ title }}</h3>
         <!-- On vérifie les conditions d'affichage du bouton delete -->
         <button v-if="role === 'admin' || postUserId===userId"
-                class="btn btn-light"
+                class="btn btn-pink"
                 @click="deletePost">
           Delete
         </button> 
@@ -86,5 +86,15 @@ p {
 .not-too-big {
   max-width: 100%;
   background-position : center center;
+}
+
+.btn-pink {
+  border: 2px solid rgb(231, 186, 186);
+  border-radius: 5px;
+  background-color: rgb(100%, 84%, 84%);
+  &:hover {
+    background-color: darken(rgb(100%, 84%, 84%),5%);
+    border: 2px solid darken(rgb(231, 186, 186),10%);
+  }
 }
 </style>
