@@ -69,10 +69,11 @@ exports.login = (req, res, next) => {
 }
 
 exports.profile = (req, res, next) => {
-  if (req.params.id) {
-    conn.query(`SELECT * FROM users WHERE id=?`, [req.params.id], function(error, response) {
-      if (response.length === 0) return res.status(404).json({ error : 'Profil inconnu' });
-      return res.status(200).json({ response })
+  const decoded = jwt.decode(req.params.token, {complete: true});
+  if (decoded.payload.userId) {
+    conn.query(`SELECT * FROM users WHERE id=?`, [decoded.payload.userId], function(error, user) {
+      if (user.length === 0) return res.status(404).json({ error : 'Profil inconnu' });
+      return res.status(200).json({ user: user })
     })
   }
   else {

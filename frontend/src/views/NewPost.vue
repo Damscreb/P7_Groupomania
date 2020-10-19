@@ -46,7 +46,7 @@ export default {
       imageUrl: "",
       userId: parseInt(localStorage.getItem("userId")),
       message: "",
-      btnClass: "btn btn-upload",
+      btnClass: "btn btn-red",
       titleClass: "font-weight-bold h1 mb-4",
       borderClass: "container fifty-width border border-light p-3 text-light pb-4",
       imageSrc: "",
@@ -81,16 +81,6 @@ export default {
 
 .fifty-width {
   width: 50%
-}
-
-.btn-upload {
-  border: 2px solid rgb(231, 186, 186);
-  border-radius: 5px;
-  background-color: rgb(100%, 84%, 84%);
-  &:hover {
-    background-color: darken(rgb(100%, 84%, 84%),5%);
-    border: 2px solid darken(rgb(231, 186, 186),10%);
-  }
 }
 
 </style>

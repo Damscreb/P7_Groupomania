@@ -6,7 +6,7 @@
 
         <!-- On vérifie les conditions d'affichage du bouton delete -->
         <button v-if="role === 'admin' || postUserId===userId"
-                class="btn btn-pink"
+                class="btn btn-red"
                 @click="deletePost">
           Delete
         </button> 
@@ -69,8 +69,8 @@ export default {
   methods: {
     deletePost() {
       this.$axios
-        .delete(`/posts/${this.postId}`)
-        //.then(response => this.$router.push({ name: 'Posts' })) Marche pas
+        .delete(`/posts/${this.postId}`,
+                this.$emit('post-deleted'))
         .catch(error => this.message=error)
     }
   },
@@ -80,7 +80,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
+$base-color : rgb(253,45,1);
+
 p {
   margin:0;
 }
@@ -90,13 +93,16 @@ p {
   background-position : center center;
 }
 
-.btn-pink {
-  border: 2px solid rgb(231, 186, 186);
+.btn-red {
+  border: 2px solid darken($base-color, 5%);
   border-radius: 5px;
-  background-color: rgb(100%, 84%, 84%);
+  background-color: $base-color;
   &:hover {
-    background-color: darken(rgb(100%, 84%, 84%),5%);
-    border: 2px solid darken(rgb(231, 186, 186),10%);
+    background-color: darken($base-color,10%);
+    border: 2px solid darken($base-color,25%);
+  }
+  &:active {
+    background-color: lighten($base-color,10%);
   }
 }
 </style>

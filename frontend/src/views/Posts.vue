@@ -11,8 +11,8 @@
             :date="post.date"
             :postUserId="post.userId"
             :role="role"
-            :userId="userId">
-            <!-- @delete="restartPosts"> -->
+            :userId="userId"
+            v-on:post-deleted="updatePosts">
       </PostWall>
     </div>
 
@@ -24,28 +24,28 @@ export default {
   data () {
     return {
       posts: [],
-      users: [],
-      role: localStorage.getItem('role'),
-      userId: parseInt(localStorage.getItem('userId'))
+      userId: Number,
+      role: ""
     }
   },
-  beforeMount() {
+  mounted() {
+    this.$axios
+      .get(`auth/profile/${sessionStorage.getItem('token')}`)
+      .then(response => {
+        this.role= response.data.user[0].role
+        this.userId= response.data.user[0].id
+      })
     this.$axios
       .get('/posts')
       .then(response => (this.posts = response.data.post))
   },
-  // beforeUpdate() {
-
-  // },
-  destroyed() {
-    this.users= []
+  methods: {
+    updatePosts() {
+      this.$axios
+        .get('/posts')
+        .then(response => {this.posts = response.data.post })
+    }
   }
-  // methods: {
-  //   restartPosts() {
-  //     // J'aimerai recharger le fil d'actu : le composant Posts.vue
-  //     this.$router.push({ name: 'Posts' })
-  //   }
-  // }
 }
 </script>
 

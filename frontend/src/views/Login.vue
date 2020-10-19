@@ -62,8 +62,6 @@ export default {
         })
         .then(response => {
           sessionStorage.setItem("token", response.data.token),
-          localStorage.setItem("userId", response.data.user.id),
-          localStorage.setItem("role", response.data.user.role),
           localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
           this.messageConnection = response.data.msg,
           this.$axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token,
