@@ -66,6 +66,7 @@ export default {
           localStorage.setItem("role", response.data.user.role),
           localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
           this.messageConnection = response.data.msg,
+          this.$axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token,
           this.$router.push({ name: 'Posts' })                   
         })
         .catch(error => this.messageConnection = "Identifiants erronés")

@@ -3,12 +3,14 @@
     <div class="border border-light rounded-lg text-light d-flex flex-column mx-auto mb-3 py-3 px-5">
       <div class="py-3 d-flex justify-content-between">
         <h3>{{ title }}</h3>
+
         <!-- On vérifie les conditions d'affichage du bouton delete -->
         <button v-if="role === 'admin' || postUserId===userId"
                 class="btn btn-pink"
                 @click="deletePost">
           Delete
         </button> 
+
       </div>
       
       <router-link :to="route">

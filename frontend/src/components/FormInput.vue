@@ -45,7 +45,7 @@ export default {
 <style lang="scss" scoped>
 
 .full-width {
-  width: 100%
+  width: 100% 
 }
 
 input {

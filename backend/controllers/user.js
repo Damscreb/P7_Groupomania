@@ -40,27 +40,6 @@ exports.signup = (req, res, next) => {
       )
     })
   }
-//   conn.query(`SELECT * FROM users WHERE password=?`, [passwordHashed], function(err, response) {
-//     if (err) return res.status(500).json({ error : err });
-//     console.log(response)
-//     bcrypt.compare(req.body.password, passwordHashed, function(result) {
-//       if(result) {
-//         const token = jwt.sign(
-//                         { userId: response[0].id },
-//                         process.env.TOKEN,
-//                         { expiresIn: '24h' } )
-//         conn.query(`UPDATE users SET lastUpdate=now() WHERE id = ?`, [response[0].id]);
-//         return res.status(200).send({
-//           msg: "Connexion réussie!",
-//           token,
-//           user: response[0]
-//         });
-//       }
-//       else {
-//         return res.status(400).json({ message: "Invalid Password" });
-//       }
-//     })
-//   })
 };
 
 exports.login = (req, res, next) => {
