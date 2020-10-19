@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-darker pb-5">
+  <div class="bg-darker pb-5 min-height">
     <Header/>
 
     <div class="container fifty-width">
@@ -12,7 +12,8 @@
             :postUserId="post.userId"
             :role="role"
             :userId="userId"
-            v-on:post-deleted="updatePosts">
+            :post-deleted="updatePosts"
+            >
       </PostWall>
     </div>
 
@@ -24,6 +25,8 @@ export default {
   data () {
     return {
       posts: [],
+      likes: Number,
+      dislikes: Number,
       userId: Number,
       role: ""
     }
@@ -34,10 +37,12 @@ export default {
       .then(response => {
         this.role= response.data.user[0].role
         this.userId= response.data.user[0].id
-      })
-    this.$axios
-      .get('/posts')
-      .then(response => (this.posts = response.data.post))
+        this.$axios
+          .get('/posts')
+          .then(responses => {
+            this.posts = responses.data.post
+          })
+      })    
   },
   methods: {
     updatePosts() {
@@ -52,5 +57,9 @@ export default {
 <style scoped lang="scss">
 .fifty-width {
   width: 50%
+}
+
+.min-height {
+  min-height: 100%;
 }
 </style>

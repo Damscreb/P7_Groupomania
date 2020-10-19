@@ -4,10 +4,18 @@ const fs = require('fs');
 var conn = require('../mySqlConfig');
 
 exports.getAllPosts = (req, res) => {
-    conn.query('SELECT * FROM posts ORDER BY date DESC',
-        function(error, result) {
+    conn.query('SELECT * FROM posts ORDER BY date DESC', function(error, result) {
             if (error) res.status(500).json({ error : error })
-            return res.status(200).json({ post : result })
+            conn.query(`SELECT * FROM likes WHERE type=?`,[1], function(erro,likes) {
+                if (erro) return res.status(500).json({ error : erro });
+                conn.query(`SELECT * FROM likes WHERE type=?`, [req.params.id, -1], function(errors,dislikes) {
+                    if (erro) return res.status(500).json({ error : errors });
+                    return res.status(200).json({ post : result,
+                                                 likes: likes,
+                                                 dislikes: dislikes
+                                                });
+                })
+            })
         }
     )
 }
@@ -32,8 +40,17 @@ exports.getOnePost = (req, res) => {
             if (error) return res.status(500).json({ error : error });
             conn.query(`SELECT * FROM commentaries WHERE postId=?`, [req.params.id], function(err,resultat) {
                 if (err) return res.status(500).json({ error : err });
-                return res.status(200).json({ post : result,
-                                              commentaires : resultat})
+                conn.query(`SELECT * FROM likes WHERE postId=? AND type=?`, [req.params.id, 1], function(erro,likes) {
+                    if (erro) return res.status(500).json({ error : erro });
+                    conn.query(`SELECT * FROM likes WHERE postId=? AND type=?`, [req.params.id, -1], function(errors,dislikes) {
+                        if (errors) return res.status(500).json({ error : errors });
+                        return res.status(200).json({ post : result,
+                                                     commentaires : resultat,
+                                                     likes: likes,
+                                                     dislikes: dislikes
+                                                    });
+                    })
+                })
             })
         })
     }
@@ -87,6 +104,23 @@ exports.deletePost = (req, res) => {
     }
 }
 
+exports.getLikesDislikes = (req,res) => {
+    if (req.params.id) {
+        conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [1, req.params.id],function(errors,nbeLikes){
+            if (errors) return res.status(500).json({ error : errors });
+            conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [-1, req.params.id],function(problem,nbeDislikes){
+                if (problem) return res.status(500).json({ error : problem });
+                return res.status(200).json({ likes: nbeLikes.length ,
+                                              dislikes: nbeDislikes.length
+                });
+            })
+        })
+    }
+    else {
+        return res.status(500).json({ message : "Mauvaise requête" })
+    }
+}
+
 exports.likePost = (req, res) => {
     if (req.params.id && req.body.userId && req.body.type) {
         
@@ -96,7 +130,16 @@ exports.likePost = (req, res) => {
                 if  (result[0] !== undefined || result === []) { // Cas du unlike
                     conn.query('DELETE FROM likes WHERE userId = ? AND postId =?', [req.body.userId, req.params.id], function(error,resultat){
                         if (error) return res.status(500).json({ error : error });
-                        return res.status(200).json({ message : "Dislike ou like retiré" });
+                        conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [1, req.params.id],function(errors,nbeLikes){
+                            if (error) return res.status(500).json({ error : errors });
+                            conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [-1, req.params.id],function(problem,nbeDislikes){
+                                if (error) return res.status(500).json({ error : problem });
+                                return res.status(200).json({ message : "Like ou dislike retiré!",
+                                                              likes: nbeLikes.length ,
+                                                              dislikes: nbeDislikes.length
+                                });
+                            })
+                        })
                     })
                 }     
             
@@ -104,7 +147,16 @@ exports.likePost = (req, res) => {
                     conn.query('INSERT INTO likes (userId, postId, type) VALUES (?, ?, ?)',
                     [req.body.userId, req.params.id, req.body.type], function(error, resultat) {
                         if (error) return res.status(500).json({ error : error });
-                        return res.status(200).json({ message : "Post liké !" })
+                        conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [1, req.params.id],function(errors,nbeLikes){
+                            if (error) return res.status(500).json({ error : errors });
+                            conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [-1, req.params.id],function(problem,nbeDislikes){
+                                if (error) return res.status(500).json({ error : problem });
+                                return res.status(200).json({ message : "Post liké!",
+                                                              likes: nbeLikes.length ,
+                                                              dislikes: nbeDislikes.length
+                                });
+                            })
+                        })
                     })
                 }
             })
@@ -112,10 +164,19 @@ exports.likePost = (req, res) => {
         else if (req.body.type == -1) {  // Cas du dislike de post
             conn.query('SELECT id FROM likes WHERE userId = ? AND postId =?', [req.body.userId, req.params.id], function(error, result) {
                 
-                if  (result[0] !== undefined || result === []) { // Cas du unlike
+                if  (result[0] !== undefined || result === []) { // Cas du undislike
                     conn.query('DELETE FROM likes WHERE userId = ? AND postId =?', [req.body.userId, req.params.id], function(error,resultat){
                         if (error) return res.status(500).json({ error : error });
-                        return res.status(200).json({ message : "Like retiré ou post undisliké !" });
+                        conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [1, req.params.id],function(errors,nbeLikes){
+                            if (error) return res.status(500).json({ error : errors });
+                            conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [-1, req.params.id],function(problem,nbeDislikes){
+                                if (error) return res.status(500).json({ error : problem });
+                                return res.status(200).json({ message : "Like ou dislike retiré!",
+                                                              likes: nbeLikes.length ,
+                                                              dislikes: nbeDislikes.length
+                                });
+                            })
+                        })
                     })
                 }     
             
@@ -123,11 +184,16 @@ exports.likePost = (req, res) => {
                     conn.query('INSERT INTO likes (userId, postId, type) VALUES (?, ?, ?)',
                     [req.body.userId, req.params.id, req.body.type], function(error, resultat) {
                         if (error) return res.status(500).json({ error : error });
-                    })
-                    // Et on supprime si y avait un like
-                    conn.query('DELETE FROM likes WHERE userId = ? AND postId =? AND type=?', [req.body.userId, req.params.id, 1], function(error,resultat){
-                        if (error) return res.status(500).json({ error : error });
-                        return res.status(200).json({ message : "Post disliké !" });
+                        conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [1, req.params.id],function(errors,nbeLikes){
+                            if (error) return res.status(500).json({ error : errors });
+                            conn.query('SELECT * FROM likes WHERE type=? AND postId =?', [-1, req.params.id],function(problem,nbeDislikes){
+                                if (error) return res.status(500).json({ error : problem });
+                                return res.status(200).json({ message : "Post disliké!",
+                                                              likes: nbeLikes.length ,
+                                                              dislikes: nbeDislikes.length
+                                });
+                            })
+                        })
                     })
                 }
             })
