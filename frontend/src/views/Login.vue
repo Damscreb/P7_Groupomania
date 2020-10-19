@@ -10,6 +10,7 @@
               v-if="messageConnection === null">
               Connectez-vous !
           </h2>
+          
           <h2 class="mb-5" v-else>{{ messageConnection }}</h2>
 
           <form @submit="connection">
@@ -65,7 +66,8 @@ export default {
           localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
           this.messageConnection = response.data.msg,
           this.$axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token,
-          this.$router.push({ name: 'Posts' })                   
+          setTimeout(function () { this.$router.push({ name: 'Posts' }) }.bind(this), 1000)
+                             
         })
         .catch(error => this.messageConnection = "Identifiants erronés")
         

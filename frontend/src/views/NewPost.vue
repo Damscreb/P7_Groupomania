@@ -44,7 +44,7 @@ export default {
     return {
       title: "",
       imageUrl: "",
-      userId: parseInt(localStorage.getItem("userId")),
+      userId: "",
       message: "",
       btnClass: "btn btn-red",
       titleClass: "font-weight-bold h1 mb-4",
@@ -57,18 +57,23 @@ export default {
     createPost(e) {
       e.preventDefault()
       this.$axios
-        .post('posts/', {
-          title: this.title,
-          imageUrl: this.imageUrl,
-          userId: this.userId
-        })
-        .then(response => this.message = response.data.message,
-                          this.btnClass= "btn btn-success",
-                          this.titleClass= "font-weight-bold h1 mb-4 text-success",
-                          this.borderClass= "container fifty-width border border-success p-3 text-light pb-4",
-                          this.imageSrc= this.imageUrl,
-                          this.imageTitle= this.title)
-        .catch(error => this.message= error.data.message)
+      .get(`auth/profile/${sessionStorage.getItem('token')}`)
+      .then(response => {
+        this.userId= response.data.user[0].id
+        this.$axios
+          .post('posts/', {
+            title: this.title,
+            imageUrl: this.imageUrl,
+            userId: this.userId
+          })
+          .then(response => this.message = response.data.message,
+                            this.btnClass= "btn btn-success",
+                            this.titleClass= "font-weight-bold h1 mb-4 text-success",
+                            this.borderClass= "container fifty-width border border-success p-3 text-light pb-4",
+                            this.imageSrc= this.imageUrl,
+                            this.imageTitle= this.title)
+          .catch(error => this.message= error.data.message)
+      })
     }
   }
 }
