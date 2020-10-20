@@ -23,12 +23,22 @@
           {{ message }}
         </h3>
 
-        <div v-if="message">
+        <router-link v-if="message"
+                name="back-to-posts"
+                :class="btnClass"
+                to="Posts"
+                type="button">
+          Retour aux posts
+        </router-link>
+
+        <div v-if="message" class="mt-4">
           <h4>{{ title }}</h4>
-          <img :src="imageSrc" class="img-fluid mb-3">
+          <img :src="imageSrc" class="img-fluid">
         </div>
 
-        <button :class="btnClass" type="submit">
+        <button v-if=" message === '' "
+                :class="btnClass" 
+                type="submit">
           Uploader
         </button>
 

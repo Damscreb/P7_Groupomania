@@ -215,7 +215,7 @@ exports.createComment = (req, res) => {
         const time = new Date;
         conn.query('INSERT INTO commentaries (userId, postId, date, comment) VALUES (?, ?, ?, ?)', [req.body.userId, req.params.id, time, req.body.comment], function(error){
             if (error) return res.status(500).json({ error : error });
-            return res.status(200).json({ message : 'Commentaire ajouté !' })
+            return res.status(200).json({ message : req.body.comment })
         })
     }
     else {
@@ -237,13 +237,8 @@ exports.modifyComment = (req, res) => {
 }
 
 exports.deleteComment = (req, res) => {
-    if (req.body.userId) {
-        conn.query('DELETE FROM commentaries WHERE id=?', [req.params.idcomment], function(error, result) {
-            if (error) return res.status(500).json({ error : error });
-            return res.status(200).json({ message : 'Commentaire supprimé!' })
-        })
-    }
-    else {
-        return res.status(500).json({ error : 'Mauvais paramétrage de la requête' })
-    }
+    conn.query('DELETE FROM commentaries WHERE id=?', [req.params.idcomment], function(error, result) {
+        if (error) return res.status(500).json({ message : error });
+        return res.status(200).json({ message : 'Commentaire supprimé!' })
+    })
 }

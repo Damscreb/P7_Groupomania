@@ -5,7 +5,7 @@
         <h3>{{ title }}</h3>
 
         <!-- On vérifie les conditions d'affichage du bouton delete -->
-        <button v-if="role === 'admin' || postUserId===userId"
+        <button v-if="role === 'admin' || postUserId === userId"
                 class="btn btn-red"
                 @click="deletePost">
           Delete
@@ -102,8 +102,8 @@ export default {
     },
     deletePost() {
       this.$axios
-        .delete(`/posts/${this.postId}`,
-                this.$emit('post-deleted'))
+        .delete(`/posts/${this.postId}`)
+        .then(this.$emit('post-deleted'))
         .catch(error => this.message=error)
     },
     addLike() {

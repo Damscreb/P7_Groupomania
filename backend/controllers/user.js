@@ -81,6 +81,13 @@ exports.profile = (req, res, next) => {
   }
 }
 
+exports.profileComment = (req, res, next) => {
+  conn.query(`SELECT firstName, lastName FROM users WHERE id=?`, [req.params.id], function(error, user) {
+    if (error) return res.status(404).json({ error : 'Profil inconnu' });
+    return res.status(200).json({ user: user })
+  })
+}
+
 exports.deleteUser = (req, res, next) => {
   if (req.params.id) {
     conn.query('DELETE FROM commentaries WHERE userId=?', [req.params.id], function(error,result) {

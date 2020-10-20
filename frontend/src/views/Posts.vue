@@ -50,7 +50,7 @@ export default {
         this.$axios
         .get('/posts')
         .then(response => this.posts = response.data.post)
-       }.bind(this), 250)    
+       }.bind(this), 150)    
     }
   }
 }
