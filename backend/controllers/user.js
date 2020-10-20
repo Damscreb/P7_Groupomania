@@ -85,12 +85,12 @@ exports.deleteUser = (req, res, next) => {
   if (req.params.id) {
     conn.query('DELETE FROM commentaries WHERE userId=?', [req.params.id], function(error,result) {
       if (error) return res.status(501).json({ error : error });
+    })    
+    conn.query('DELETE FROM likes WHERE userId=?', [req.params.id], function(error,result) {
+      if (error) return res.status(503).json({ error : error });
     })
     conn.query('DELETE FROM posts WHERE userId=?', [req.params.id], function(error,result) {
       if (error) return res.status(502).json({ error : error });
-    })
-    conn.query('DELETE FROM likes WHERE userId=?', [req.params.id], function(error,result) {
-      if (error) return res.status(503).json({ error : error });
     })
     conn.query(`DELETE FROM users WHERE id=?`, [req.params.id], function(error, result){
       if (error) return res.status(500).json({ error : error });

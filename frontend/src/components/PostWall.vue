@@ -97,6 +97,9 @@ export default {
     this.route= "/post/" + `${this.postId}`
   },
   methods: {
+    createMessage() {
+      this.message = response.data.message
+    },
     deletePost() {
       this.$axios
         .delete(`/posts/${this.postId}`,
@@ -143,6 +146,7 @@ p {
 
 .not-too-big {
   max-width: 100%;
+  max-height: 800px;
   background-position : center center;
 }
 

@@ -94,13 +94,19 @@ exports.modifyPost = (req, res) => {
 
 exports.deletePost = (req, res) => {
     if (req.params.id) {
-        conn.query('DELETE FROM posts WHERE id=?', [req.params.id], function(error) {
-            if (error) return res.status(500).json({ error : error });
-            return res.status(200).json({ message : 'Post bien supprimé!' })
+        conn.query('DELETE FROM commentaries WHERE postId=?', [req.params.id], function(error) {
+            if (error) return res.status(501).json({ error : error });
+        })    
+        conn.query('DELETE FROM likes WHERE postId=?', [req.params.id], function(error) {
+            if (error) return res.status(503).json({ error : error });
         })
+        conn.query('DELETE FROM posts WHERE id=?', [req.params.id], function(error) {
+            if (error) return res.status(502).json({ error : error });
+        })
+        return res.status(200).json({message : "Post supprimé!"})
     }
     else {
-        return res.status(404).json({ error : 'Post inconnu' });
+        return res.status(404).json({ message : 'Post inconnu' })
     }
 }
 

@@ -12,7 +12,7 @@
             :postUserId="post.userId"
             :role="role"
             :userId="userId"
-            :post-deleted="updatePosts"
+            @post-deleted="updatePosts"
             >
       </PostWall>
     </div>
@@ -46,9 +46,11 @@ export default {
   },
   methods: {
     updatePosts() {
-      this.$axios
+      setTimeout(function () { 
+        this.$axios
         .get('/posts')
-        .then(response => {this.posts = response.data.post })
+        .then(response => this.posts = response.data.post)
+       }.bind(this), 250)    
     }
   }
 }
