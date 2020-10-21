@@ -11,6 +11,7 @@ import FormInput from "./components/FormInput.vue";
 import Header from './components/Header.vue'
 import PostWall from './components/PostWall.vue'
 import Commentaries from './components/Commentaries.vue'
+import Navigator from './components/Navigator.vue'
 
 axios.defaults.baseURL = "http://localhost:3000/api/";
 const token = sessionStorage.getItem("token");
@@ -28,6 +29,7 @@ Vue.component("FormInput", FormInput);
 Vue.component("Header", Header);
 Vue.component("PostWall", PostWall);
 Vue.component("Commentaries", Commentaries);
+Vue.component("Navigator", Navigator);
 
 new Vue({
   router,

@@ -100,6 +100,9 @@ export default {
   position: relative;
   bottom: 18px;
   left: 25px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 </style>

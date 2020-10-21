@@ -1,0 +1,45 @@
+<template>
+  <div class="col-3 border border-light">
+    <ul class="my-2 nav d-flex flex-column">
+      <li class="nav-item my-1 p-2" id="first">
+        <MessageRouter msg="My Account" route="/settings"></MessageRouter>
+      </li>
+      <li class="nav-item my-1 p-2" id="second">
+        <MessageRouter msg="Password" route="/settings/password"></MessageRouter>
+      </li>
+      <li class="nav-item my-1 p-2" id="third">
+        <MessageRouter msg="My Posts" route="/settings/posts"></MessageRouter>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Navigator",
+  props: {
+    isActive: {
+      required: true,
+      type: String
+    }
+  },
+  mounted() {
+    if (this.isActive==1) {
+      this.$el.querySelector("#first").classList="active nav-item my-1 p-2"
+    }
+    if (this.isActive==2) {
+      this.$el.querySelector("#second").classList="active nav-item my-1 p-2"
+    }
+    if (this.isActive==3) {
+      this.$el.querySelector("#third").classList="active nav-item my-1 p-2"
+    }
+  }
+
+}
+</script>
+
+<style lang="scss">
+.active {
+  background-color: lighten(rgb(5%, 6%, 6%),15%);
+}
+</style>

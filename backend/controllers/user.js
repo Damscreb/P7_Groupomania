@@ -111,9 +111,9 @@ exports.deleteUser = (req, res, next) => {
 
 exports.modifyUser = (req, res, next) => {
   if (req.params.id) {
-    conn.query('SELECT * FROM users WHERE id=?', [req.params.id], function(err,result) { // On vérifie qu'on modifie un utilisateur existant
+    conn.query('SELECT * FROM users WHERE id=?', [req.params.id], function(err,resultat) { // On vérifie qu'on modifie un utilisateur existant
       if (err) return res.status(500).json({ error : err })
-      if (result.length === 0) {
+      if (resultat.length === 0) {
         return res.status(404).json({ error : 'Profil inconnu' })
       }
       else {

@@ -1,11 +1,12 @@
 <template>
   <div>
-      <router-link :to="route" class="text-primary">{{ msg }}</router-link>
+      <router-link :to="route">{{ msg }}</router-link>
   </div>
 </template>
 
 <script>
 export default {
+  name: "Router",
   props: {
     msg: {
       type: String,

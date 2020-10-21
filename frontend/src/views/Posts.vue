@@ -25,8 +25,6 @@ export default {
   data () {
     return {
       posts: [],
-      likes: Number,
-      dislikes: Number,
       userId: Number,
       role: ""
     }
