@@ -1,5 +1,6 @@
 <template>
   <div class="col-3 border border-light">
+
     <ul class="my-2 nav d-flex flex-column">
       <li class="nav-item my-1 p-2" id="first">
         <MessageRouter msg="My Account" route="/settings"></MessageRouter>
@@ -23,18 +24,29 @@ export default {
       type: String
     }
   },
+  data() {
+    return {
+        role: "",
+        userId: Number,
+      }
+  },
   mounted() {
-    if (this.isActive==1) {
-      this.$el.querySelector("#first").classList="active nav-item my-1 p-2"
-    }
-    if (this.isActive==2) {
-      this.$el.querySelector("#second").classList="active nav-item my-1 p-2"
-    }
-    if (this.isActive==3) {
-      this.$el.querySelector("#third").classList="active nav-item my-1 p-2"
-    }
+    this.$axios
+      .get(`auth/profile/${sessionStorage.getItem('token')}`)
+      .then(response => {
+        this.role= response.data.user[0].role
+        this.userId= response.data.user[0].id
+          if (this.isActive==1) {
+            this.$el.querySelector("#first").classList="active nav-item my-1 p-2"
+          }
+          if (this.isActive==2) {
+            this.$el.querySelector("#second").classList="active nav-item my-1 p-2"
+          }
+          if (this.isActive==3) {
+            this.$el.querySelector("#third").classList="active nav-item my-1 p-2"
+          }
+      })
   }
-
 }
 </script>
 

@@ -95,7 +95,7 @@ h2 {
   box-shadow: 1px 1px 12px #555;
 }
 
-.full-width {
+.eighty-width {
   width: 80%
 }
 

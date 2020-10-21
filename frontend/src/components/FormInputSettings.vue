@@ -2,7 +2,7 @@
   <div class="mb-2">
     <input :id=idLinked 
           v-model="input" 
-          :placeholder="idLinked"
+          :placeholder="placeholder" 
           class="full-width"
           required
           @input="sendData"> 
@@ -14,6 +14,10 @@ export default {
   name: 'FormInput',
   props: {
     idLinked: {
+      type: String,
+      required: true
+    },
+    placeholder: {
       type: String,
       required: true
     }
@@ -32,9 +36,6 @@ export default {
   // Ici, lorsque nos composants sont créés, on vérifie si ce sont des inputs pour des passwords
   // Si c'est le cas, on donne type="password" à l'input en question, de même pour email
   mounted() {
-    if (this.$props.idLinked === "Password") {
-      this.$el.firstChild.type = "password"
-    }
     if (this.$props.idLinked === "Email") {
       this.$el.firstChild.type = "email"
     }

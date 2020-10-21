@@ -8,7 +8,7 @@
         <Navigator isActive="3"></Navigator>
 
         <div class="col-9 p-3 d-flex flex-column justify-content-start">
-          <h2 class="mr-auto"><u>My posts :</u></h2>
+          <h2><u>My posts :</u></h2>
           <hr/>
           <PostWall v-for="post in posts"            
             :key="post.id"

@@ -8,12 +8,12 @@
           <h1 class="mb-5">Rejoignez le réseau social interne, moderne et ludique !</h1>
           <form @submit="createAccount">
 
-            <FormInput idLinked="Email" v-model="email"/>
-
             <FormInput idLinked="Prénom" v-model="firstName"/>
 
             <FormInput idLinked="Nom" v-model="lastName"/>
 
+            <FormInput idLinked="Email" v-model="email"/>
+            
             <FormInput idLinked="Password" v-model="password" class="mb-5"/>
 
             <p>

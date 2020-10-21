@@ -137,7 +137,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 $base-color : rgb(253,45,1);
 
 p {
