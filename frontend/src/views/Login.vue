@@ -6,12 +6,12 @@
         <div class="col border border-light bg-black text-light ">
 
           <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
-          <h2 class="mb-5"
+          <h2 class="mb-5 font-weight-bold"
               v-if="messageConnection === null">
               Connectez-vous !
           </h2>
           
-          <h2 class="mb-5" v-else>{{ messageConnection }}</h2>
+          <h2 class="mb-5 font-weight-bold" v-else>{{ messageConnection }}</h2>
 
           <form @submit="connection">
 

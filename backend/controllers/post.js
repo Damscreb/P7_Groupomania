@@ -62,7 +62,7 @@ exports.getOnePost = (req, res) => {
 exports.myPosts = (req, res) => {
     if (req.params.userId) {
         conn.query('SELECT * FROM posts WHERE userId=? ORDER BY date DESC', [req.params.userId], function(error, result) {
-            if (error) return res.status(404).json({ error : error })
+            if (error || result.length===0) return res.status(404).json({ error : error })
             conn.query(`SELECT * FROM commentaries WHERE postId=?`, [result[0].id], function(err,resultat) {
                 if (err) return res.status(500).json({ error : err });
                 conn.query(`SELECT * FROM likes WHERE postId=?`, [result[0].id], function(errs,resultats) {

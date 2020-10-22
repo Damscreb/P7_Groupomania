@@ -4,7 +4,6 @@ import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Posts from "../views/Posts.vue";
 import Post from "../views/Post.vue";
-import AccountPassword from "../views/AccountPassword.vue";
 import AccountPosts from "../views/AccountPosts.vue";
 import Settings from "../views/Settings.vue";
 import NewPost from "../views/NewPost.vue";
@@ -43,11 +42,6 @@ const router = new VueRouter({
       path: "/settings",
       name: "Settings",
       component: Settings
-    },
-    {
-      path: "/settings/password",
-      name: "AccountPassword",
-      component: AccountPassword
     },
     {
       path: "/settings/posts",

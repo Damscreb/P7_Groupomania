@@ -1,14 +1,11 @@
 <template>
-  <div class="col-3 border border-light">
+  <div class="col-3 border-right border-light">
 
     <ul class="my-2 nav d-flex flex-column">
       <li class="nav-item my-1 p-2" id="first">
         <MessageRouter msg="My Account" route="/settings"></MessageRouter>
       </li>
       <li class="nav-item my-1 p-2" id="second">
-        <MessageRouter msg="Password" route="/settings/password"></MessageRouter>
-      </li>
-      <li class="nav-item my-1 p-2" id="third">
         <MessageRouter msg="My Posts" route="/settings/posts"></MessageRouter>
       </li>
     </ul>

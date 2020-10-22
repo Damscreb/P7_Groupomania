@@ -101,7 +101,7 @@ exports.deleteUser = (req, res, next) => {
     })
     conn.query(`DELETE FROM users WHERE id=?`, [req.params.id], function(error, result){
       if (error) return res.status(500).json({ error : error });
-      return res.status(200).json({ message : 'Toute trace de votre compte a bien été supprimée (commentaires, likes, posts, compte)' })
+      return res.status(200).json({ message : 'All traces of your account have been deleted (commentaries, likes, posts, account)' })
     })
   }
   else {

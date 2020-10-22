@@ -5,11 +5,15 @@
     <div class="border border-light text-light container">
       <div class="row">
 
-        <Navigator isActive="3"></Navigator>
+        <Navigator isActive="2"></Navigator>
 
         <div class="col-9 p-3 d-flex flex-column justify-content-start">
           <h2><u>My posts :</u></h2>
           <hr/>
+          <p v-if="message!==''"
+             class="font-weight-bold my-2 text-red">
+            {{ message }}
+          </p>
           <PostWall v-for="post in posts"            
             :key="post.id"
             :postId="post.id"
@@ -35,7 +39,8 @@ export default {
     return {
       posts: [],
       userId: Number,
-      role: ""
+      role: "",
+      message: ""
     }
   },
   mounted() {
@@ -47,10 +52,13 @@ export default {
         this.$axios
           .get(`/posts/${this.userId}/posts`)
           .then(responses => {
+            this.message=""
             this.posts = responses.data.post
             this.commentaries= responses.data.commentaires
             this.postId= responses.data.post[0].id
           })
+          .catch(error => 
+            this.message= "No post found")
       })    
   },
   methods: {
@@ -65,7 +73,8 @@ export default {
 }
 </script>
 
-<style scoped langs="scss">
+<style scoped lang="scss">
+$base-color : rgb(253,45,1);
 h2 {
   font-size: 20px;
   font-weight: 700;
@@ -73,5 +82,8 @@ h2 {
 hr {
   width: 100%;
   border-top: 1px solid rgb(97%, 98%, 98%);
+}
+.text-red {
+  color: $base-color;
 }
 </style>

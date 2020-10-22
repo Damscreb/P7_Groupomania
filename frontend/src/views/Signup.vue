@@ -5,7 +5,7 @@
       <div class="row thirdty-width mb-4 text-light">
         <div class="col border border-light bg-black">
           <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
-          <h1 class="mb-5">Rejoignez le réseau social interne, moderne et ludique !</h1>
+          <h1 class="mb-5 font-weight-bold">Rejoignez le réseau social interne, moderne et ludique !</h1>
           <form @submit="createAccount">
 
             <FormInput idLinked="Prénom" v-model="firstName"/>
