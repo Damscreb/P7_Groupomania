@@ -2,7 +2,7 @@
   <div class="bg-darker pb-5 min-height">
     <Header/>
 
-    <div class="container sixty-five-width" v-if="deleted === false">
+    <div class="container" v-if="deleted === false">
       <PostWall v-for="post in posts"            
             :key="post.id"
             :postId="post.id"
@@ -26,16 +26,16 @@
 
         <div class="d-flex flex-column container">
           <form class="row">
-            <label for="newComment col-4"
+            <label for="newComment"
                   class="mr-auto h4">
-              Votre commentaire :
+              Votre commentaire:
             </label>
             <div class="w-100"></div>
-            <textarea class="rounded-lg text-area-height inside-padding col-10"
+            <textarea class="rounded-lg text-area-height inside-padding col-11"
                       placeholder="Réagissez!"
                       maxlength="250"
+                      minlength="1"
                       v-model="newComment"
-                      required
                       id="inputNewComment"/>
           </form>
         </div>
@@ -153,5 +153,11 @@ export default {
 
 .inside-padding {
   padding: 5px;
+}
+
+@media all and (max-width: 750px) {
+  label {
+    font-size:21px;
+  }
 }
 </style>

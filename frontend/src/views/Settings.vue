@@ -12,7 +12,7 @@
         <!-- Partie droite de la vue account settings -->
         <div class="col-9 p-3 d-flex flex-column">
           <!-- Le titre -->
-          <div class="max-width">
+          <div class="w-100">
             <h2 class="mr-auto"><u>My account :</u></h2>
             <hr/>
           </div>
@@ -20,31 +20,36 @@
           <!-- Tout ce qui est relatif à la modification de données personnelles -->
           <div class="d-flex flex-row">
             <form class="d-flex flex-column sixty-width">
-              <p class="mr-auto">Your first name : <span>{{ userFirstName }}</span></p>
+              <p class="mr-auto">Your first name:</p>
+              <p class="mr-auto"><span>{{ userFirstName }}</span></p>
               <FormInputSettings idLinked="FirstName" 
                                 v-model="firstName"
                                 placeholder="Your new first name">
 
               </FormInputSettings>
 
-              <p class="mr-auto">Your last name : <span>{{ userLastName }}</span></p>
+              <p class="mr-auto">Your last name:</p>
+              <p class="mr-auto"><span>{{ userLastName }}</span></p>
               <FormInputSettings idLinked="LastName" 
                                 v-model="lastName"
                                 placeholder="Your new last name">
 
               </FormInputSettings>
 
-              <p class="mr-auto">Your email : <span>{{ userEmail }}</span></p>
+              <p class="mr-auto">Your email:</p>
+              <p class="mr-auto"><span>{{ userEmail }}</span></p>
               <FormInputSettings idLinked="Email" 
                                 v-model="email"
-                                placeholder="Your new email">
+                                placeholder="Your new email"
+                                patternLinked="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}">
 
               </FormInputSettings>
 
-              <p class="mr-auto">Your password :</p>   
+              <p class="mr-auto">Your password:</p>   
               <FormInputSettings idLinked="Password" 
                                 v-model="password"
-                                placeholder="Your new password">
+                                placeholder="Your new password"
+                                patternLinked="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
 
               </FormInputSettings>
  
@@ -126,9 +131,12 @@ export default {
     uploadUser() {
       this.message= ""
       this.messageOk= ""
-      if (this.firstName==="" && this.lastName==="" && this.email==="" && (this.password==="" || this.password2==="")) {
+      if (this.firstName==="" && this.lastName==="" && this.email==="" && this.password==="" && this.password2==="") {
         this.message= "No change detected!"
       }
+      else if (this.password !== this.password2) {
+          this.message = "Please match your new password"
+        }
       else {
         if (this.firstName==="") this.firstName= this.userFirstName
         if (this.lastName==="") this.lastName= this.userLastName
@@ -144,12 +152,16 @@ export default {
             this.$axios
               .get(`/auth/profile/${sessionStorage.getItem('token')}`)
               .then(response => {
-                this.userId= response.data.user[0].id
+                this.userId= response.data.user[0].id,
                 this.userFirstName= response.data.user[0].firstName,
                 this.userLastName= response.data.user[0].lastName,
-                this.userEmail= response.data.user[0].email
-                this.messageOk= "Change done successfully!"
+                this.userEmail= response.data.user[0].email,
+                this.messageOk= "Change done successfully!",
+                localStorage.setItem('name', this.firstName + '_' + this.lastName)
               })
+          })
+          .catch(error => {
+            this.message= error.response.data.message
           })
       }
     },
@@ -204,7 +216,10 @@ span {
   width:60%
 }
 
-.max-width {
-  width: 100%
+@media all and (max-width: 750px) {
+  form>p {
+    font-size: 14px;
+    font-weight: 600
+  }
 }
 </style>

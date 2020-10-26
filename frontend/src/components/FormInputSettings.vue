@@ -3,8 +3,8 @@
     <input :id=idLinked 
           v-model="input" 
           :placeholder="placeholder" 
+          :pattern="patternLinked"
           class="full-width"
-          required
           @input="sendData"> 
   </div>
 </template>
@@ -20,6 +20,9 @@ export default {
     placeholder: {
       type: String,
       required: true
+    },
+    patternLinked: {
+      type: String
     }
   },
   data() {
@@ -39,6 +42,9 @@ export default {
     if (this.$props.idLinked === "Email") {
       this.$el.firstChild.type = "email"
     }
+    if (this.$props.idLinked === "Password2") {
+      this.$el.firstChild.type = "password"
+    }
   }
 }
 </script>
@@ -53,4 +59,10 @@ input {
   font-size: 13px;
 }
 
+@media all and (max-width: 750px) {
+  input {
+    font-size: 11px;
+    font-weight: 600
+  }
+}
 </style>

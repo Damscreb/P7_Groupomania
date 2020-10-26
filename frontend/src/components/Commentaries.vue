@@ -2,26 +2,26 @@
   <div class="border border-light rounded-lg text-light mb-3 py-2 px-3 d-flex flex-end flex-column">
 
     <div v-if="this.message===''"
-         class="d-flex flex-row justify-content-between align-items-center">
+         class="d-flex flex-row justify-content-between align-items-start">
 
-      <div class="d-flex flex-column">
-        <u class="mr-auto h5">
+      <div class="d-flex flex-column justify-content-start mr-1">
+        <u class="text-left h5">
           {{ fullName }}
         </u>
 
-        <p class="mr-auto">
+        <p class="text-left small-area">
           {{ comment }}
         </p>
       </div>
 
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" id="deleteAndTime">
         <img src="@/assets/icon-delete.png"
              v-if="role === 'admin' || user === userId" 
              alt="Icône suppression"
              class="icon ml-auto"
              @click="deleteComment"/>
-        <p class="ml-auto">Date :  {{ time.split('T')[0] }}</p>
-        <p class="ml-auto">Heure : {{ time.split('T')[1].split('.')[0] }}</p>
+        <p class="text-right">Date :  {{ time.split('T')[0] }}</p>
+        <p class="text-right">Heure : {{ time.split('T')[1].split('.')[0] }}</p>
       </div>
 
     </div>
@@ -105,4 +105,13 @@ export default {
   }
 }
 
+#deleteAndTime {
+  font-size: 14px;
+}
+
+@media all and (max-width: 750px) {
+  .small-area {
+    width: 100%
+  }
+}
 </style>

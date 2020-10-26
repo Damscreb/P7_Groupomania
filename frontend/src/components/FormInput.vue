@@ -5,6 +5,7 @@
           :placeholder="idLinked"
           class="full-width"
           required
+          :pattern="patternLinked"
           @input="sendData"> 
   </div>
 </template>
@@ -16,6 +17,9 @@ export default {
     idLinked: {
       type: String,
       required: true
+    },
+    patternLinked: {
+      type: String
     }
   },
   data() {

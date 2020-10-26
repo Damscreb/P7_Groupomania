@@ -2,9 +2,9 @@
   <div class="bg-darker py-5 big-height">
     <div class="container d-flex align-items-center flex-column my-5">
 
-      <div class="row thirdty-width mb-4 text-light">
+      <div class="row col-12 col-sm-8 col-lg-5 mb-4 text-light">
         <div class="col border border-light bg-black">
-          <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
+          <img src="@/assets/icon-left-font.png" width="180px" class="my-5"/>
           <h1 class="mb-5 font-weight-bold">Rejoignez le réseau social interne, moderne et ludique !</h1>
           <form @submit="createAccount">
 
@@ -12,9 +12,13 @@
 
             <FormInput idLinked="Nom" v-model="lastName"/>
 
-            <FormInput idLinked="Email" v-model="email"/>
+            <FormInput idLinked="Email" patternLinked="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}" v-model="email"/>
             
-            <FormInput idLinked="Password" v-model="password" class="mb-5"/>
+            <FormInput idLinked="Password" v-model="password" patternLinked="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="mb-3"/>
+
+            <p class="m-3" id="regexMessage">
+              Votre mot de passe doit contenir au moins une majuscule, un chiffre et 8 caractères
+            </p>
 
             <p>
               <input type="submit" value="S'inscrire" class="btn btn-light border mb-3">  
@@ -23,7 +27,7 @@
         </div>
       </div>
 
-      <div class="row thirdty-width">
+      <div class="row col-12 col-sm-8 col-lg-5">
         <div class="col border border-light d-flex align-items-center text-light justify-content-center p-2 bg-black">
           <p class="my-auto mr-2">Déjà un compte?  </p> 
           <MessageRouter msg="Connectez vous!" route="login"></MessageRouter>
@@ -66,6 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$base-color : rgb(253,45,1);
 
 .bg-darker {
   background-color: rgb(5%, 6%, 6%);
@@ -90,6 +95,10 @@ export default {
 
 h1 {
   font-size: 18px
+}
+
+.text-red {
+  color: $base-color;
 }
 
 </style>

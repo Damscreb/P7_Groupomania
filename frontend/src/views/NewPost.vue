@@ -2,49 +2,52 @@
   <div class="bg-darker pb-5 big-height">
     <Header/>
 
-    <div :class="borderClass">
-      <form @submit.prevent="createPost">
-        <h2 :class="titleClass"><u>Nouveau Post</u></h2>
+    <div class="container">
+      <div class="row">
+        <div :class="borderClass">
+          <form @submit.prevent="createPost">
+            <h2 :class="titleClass"><u>Nouveau Post</u></h2>
 
-        <div class="mb-4 d-flex flex-column px-3">
-          <div class="text-left">
-            <label for="Title">Titre du post</label>
-            <FormInput idLinked="Title" v-model="title"></FormInput>
-          </div>
+            <div class="mb-4 d-flex flex-column px-3">
+              <div class="text-left">
+                <label id="titleText" for="Title">Titre du post:</label>
+                <FormInput idLinked="Title" v-model="title"></FormInput>
+              </div>
 
-          <div class="text-left">
-            <label for="Image">Image du post</label>
-            <FormInput idLinked="Image" v-model="imageUrl"></FormInput>
-          </div>
+              <div class="text-left">
+                <label for="Image">Image du post:</label>
+                <FormInput idLinked="Image" v-model="imageUrl"></FormInput>
+              </div>
+            </div>
+
+            <h3 v-if="message"
+                class="font-weight-bold h2 mb-4 text-success">
+              {{ message }}
+            </h3>
+
+            <router-link v-if="message"
+                    name="back-to-posts"
+                    :class="btnClass"
+                    to="Posts"
+                    type="button">
+              Retour aux posts
+            </router-link>
+
+            <div v-if="message" class="mt-4">
+              <h4>{{ title }}</h4>
+              <img :src="imageSrc" class="img-fluid">
+            </div>
+
+            <button v-if=" message === '' "
+                    :class="btnClass" 
+                    type="submit">
+              Uploader
+            </button>
+
+          </form>
         </div>
-
-        <h3 v-if="message"
-            class="font-weight-bold h2 mb-4 text-success">
-          {{ message }}
-        </h3>
-
-        <router-link v-if="message"
-                name="back-to-posts"
-                :class="btnClass"
-                to="Posts"
-                type="button">
-          Retour aux posts
-        </router-link>
-
-        <div v-if="message" class="mt-4">
-          <h4>{{ title }}</h4>
-          <img :src="imageSrc" class="img-fluid">
-        </div>
-
-        <button v-if=" message === '' "
-                :class="btnClass" 
-                type="submit">
-          Uploader
-        </button>
-
-      </form>
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -58,7 +61,7 @@ export default {
       message: "",
       btnClass: "btn btn-red",
       titleClass: "font-weight-bold h1 mb-4",
-      borderClass: "container fifty-width border border-light p-3 text-light pb-4",
+      borderClass: "container fifty-width border border-light p-3 text-light pb-4 col-10 col-sm-8 col-lg-6",
       imageSrc: "",
       imageTitle: ""
     }
@@ -98,4 +101,9 @@ export default {
   width: 50%
 }
 
+@media all and (max-width: 750px) {
+  h2 {
+    font-size: 30px;
+  }
+}
 </style>

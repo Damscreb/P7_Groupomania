@@ -1,6 +1,6 @@
 <template>
   <div>
-      <router-link :to="route">{{ msg }}</router-link>
+      <router-link :to="route" class='text-light'>{{ msg }}</router-link>
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
     route: {
       type: String,
       required: true
+    }
+  },
+  mounted() {
+    if (this.$props.route === "login" || this.$props.route === "signup") {
+      this.$el.firstChild.classList = "text-primary"
     }
   }
 };

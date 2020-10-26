@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
   if (req.body.email && req.body.password) {
     conn.query(`SELECT * FROM users WHERE email=?`, [req.body.email], function(err, response) {
-      if (err) return res.status(500).json({ error : err });
+      if (response[0].password===undefined) return res.status(500).json({ error : err });
       bcrypt.compare(req.body.password, response[0].password, function(err, result) {
         if(result) {
           const token = jwt.sign(
@@ -120,11 +120,11 @@ exports.modifyUser = (req, res, next) => {
         conn.query(`SELECT email, id FROM users WHERE email=?`, [req.body.email], function(problem, result) { // On vérifie si l'email qu'on veut update n'existe pas déjà
           if (problem) return res.status(500).json({ error : problem });
           if ((result[0] !== undefined || result === []) && req.params.id != result[0].id) {
-            return res.status(500).json({ message : 'Cet email est déjà utilisé'})
+            return res.status(500).json({ message : 'This email is already used'})
           }
           bcrypt.hash(req.body.password, 10, (err, hash) => {
             const time = new Date();
-            if (req.body.email === result[0].email) { // Modification de profil SANS changement d'email
+            if (req.body.email === null) { // Modification de profil SANS changement d'email
               conn.query(`UPDATE users SET firstName=?, lastName=?, password=?, lastUpdate=? WHERE id=${req.params.id}`, [req.body.firstName, req.body.lastName, hash, time], 
                 function(err, success) {
                   if (err) return res.status(500).json({ error : err });
@@ -133,13 +133,14 @@ exports.modifyUser = (req, res, next) => {
               )
             }
             else { // Modification de profil AVEC changement d'email
-              conn.query(`UPDATE users SET firstName=?, lastName=?, email=?, password=?, lastUpdate=? WHERE id=${req.params.id}`, [req.body.firstName, req.body.lastName, req.body.email, hash, time], 
-                function(err, success) {
-                  if (err) return res.status(500).json({ error : err });
-                  return res.status(200).json({ message : 'Profil mis à jour!'})
-                }
-              )
-            }
+            conn.query(`UPDATE users SET firstName=?, lastName=?, email=?, password=?, lastUpdate=? WHERE id=${req.params.id}`, 
+              [req.body.firstName, req.body.lastName, req.body.email, hash, time], 
+              function(err, success) {
+                if (err) return res.status(500).json({ error : err });
+                return res.status(200).json({ message : 'Profil mis à jour!'})
+              }
+            )
+          }
           })
         })
       }

@@ -1,6 +1,6 @@
 <!-- Seulement pour les posts sans commentaires (genre dans le fil d'actu) -->
 <template> 
-    <div class="border border-light rounded-lg text-light d-flex flex-column mx-auto mb-3 py-3 px-5">
+    <div class="border border-light rounded-lg text-light d-flex flex-column mx-auto mb-3 py-3 px-4">
       <div class="py-3 d-flex justify-content-between">
         <h3>{{ title }}</h3>
 
@@ -36,7 +36,7 @@
           {{ message }}
         </p>
 
-        <div class="ml-auto d-flex flex-column align-items-end">
+        <div class="ml-auto d-flex flex-column text-right low-font-size">
           <p>Date : {{date.split('T')[0]}}</p>
           <p>Time : {{date.split('T')[1].split('.')[0]}}</p>
         </div>
@@ -165,6 +165,23 @@ p {
 .pouceImg {
   &:hover {
     cursor: pointer;
+  }
+}
+
+@media all and (max-width: 750px) {
+  li>div>a {
+    font-size: 15px;
+  }
+
+  .low-font-size {
+    font-size: 14px
+  }
+
+  .pouceImg {
+    width:40px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 </style>

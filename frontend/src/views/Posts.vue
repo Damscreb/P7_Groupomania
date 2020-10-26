@@ -2,7 +2,7 @@
   <div class="bg-darker pb-5 min-height">
     <Header/>
 
-    <div class="container fifty-width">
+    <div class="container">
       <PostWall v-for="post in posts"
             :key="post.id"
             :postId="post.id"

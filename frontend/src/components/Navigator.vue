@@ -51,4 +51,10 @@ export default {
 .active {
   background-color: lighten(rgb(5%, 6%, 6%),15%);
 }
+
+@media all and (max-width: 750px) {
+  li>div>a {
+    font-size: 15px;
+  }
+}
 </style>

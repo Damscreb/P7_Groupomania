@@ -2,10 +2,10 @@
   <div class="bg-darker py-5 big-height">
     <div class="container d-flex align-items-center flex-column my-5">
 
-      <div class="row thirdty-width mb-4">
+      <div class="row col-12 col-sm-8 col-lg-5 mb-4">
         <div class="col border border-light bg-black text-light ">
 
-          <img src="@/assets/icon-left-font-monochrome-white.png" width="150px" />
+          <img src="@/assets/icon-left-font.png" width="180px" class="my-5"/>
           <h2 class="mb-5 font-weight-bold"
               v-if="messageConnection === null">
               Connectez-vous !
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="row thirdty-width">
+      <div class="row col-12 col-sm-8 col-lg-5">
         <div class="col border border-light d-flex align-items-center text-light justify-content-center p-2 bg-black">
           <p class="my-auto mr-2">Pas encore de compte?  </p> 
           <MessageRouter msg="Inscrivez vous!" route="signup"></MessageRouter>
@@ -66,7 +66,7 @@ export default {
           localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
           this.messageConnection = response.data.msg,
           this.$axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token,
-          setTimeout(function () { this.$router.push({ name: 'Posts' }) }.bind(this), 1000)
+          setTimeout(function () { this.$router.push({ name: 'Posts' }) }.bind(this), 2000)
                              
         })
         .catch(error => this.messageConnection = "Identifiants erronés")
