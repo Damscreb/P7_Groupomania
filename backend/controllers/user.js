@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
   if (req.body.email && req.body.password) {
     conn.query(`SELECT * FROM users WHERE email=?`, [req.body.email], function(err, response) {
-      if (response[0].password===undefined) return res.status(500).json({ error : err });
+      if (response[0].length === 0) return res.status(500).json({ error : err });
       bcrypt.compare(req.body.password, response[0].password, function(err, result) {
         if(result) {
           const token = jwt.sign(

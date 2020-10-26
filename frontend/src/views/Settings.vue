@@ -18,7 +18,7 @@
           </div>
 
           <!-- Tout ce qui est relatif à la modification de données personnelles -->
-          <div class="d-flex flex-row">
+          <div class="d-flex flex-row justify-content-between">
             <form class="d-flex flex-column sixty-width">
               <p class="mr-auto">Your first name:</p>
               <p class="mr-auto"><span>{{ userFirstName }}</span></p>
@@ -49,6 +49,7 @@
               <FormInputSettings idLinked="Password" 
                                 v-model="password"
                                 placeholder="Your new password"
+                                required
                                 patternLinked="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
 
               </FormInputSettings>
@@ -61,10 +62,18 @@
             </form>
 
             <div class="m-auto">
-              <button class="btn btn-red mb-3"
-                      @click="uploadUser">
-                Save
-              </button>
+              <div class="d-flex flex-column align-items-center">
+                <label for="confirmUpdate">Your actual password to confirm</label>
+                <input class="mb-2" 
+                       placeholder="Your password" 
+                       required 
+                       v-model="actualPassword"
+                       type="password"/>
+                <button class="btn btn-red mb-3 mx-auto"
+                        @click="uploadUser">
+                  Save
+                </button>
+              </div>
 
               <p v-if="message!==''"
                 class="text-danger">
@@ -106,6 +115,7 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
+      actualPassword: "",
       password: "",
       password2: "",
       userId: Number,
@@ -131,38 +141,53 @@ export default {
     uploadUser() {
       this.message= ""
       this.messageOk= ""
+      if (this.actualPassword === "") {
+        this.message= "Enter your actual/old password to save changes"
+      }
       if (this.firstName==="" && this.lastName==="" && this.email==="" && this.password==="" && this.password2==="") {
         this.message= "No change detected!"
       }
-      else if (this.password !== this.password2) {
+      if (this.password !== this.password2) {
           this.message = "Please match your new password"
         }
       else {
         if (this.firstName==="") this.firstName= this.userFirstName
         if (this.lastName==="") this.lastName= this.userLastName
         if (this.email==="") this.email= this.userEmail
-        this.$axios  
-          .put(`/auth/profile/${this.userId}`, {
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.email,
-            password: this.password
-          })
-          .then(response => {
-            this.$axios
-              .get(`/auth/profile/${sessionStorage.getItem('token')}`)
-              .then(response => {
-                this.userId= response.data.user[0].id,
-                this.userFirstName= response.data.user[0].firstName,
-                this.userLastName= response.data.user[0].lastName,
-                this.userEmail= response.data.user[0].email,
-                this.messageOk= "Change done successfully!",
-                localStorage.setItem('name', this.firstName + '_' + this.lastName)
-              })
-          })
-          .catch(error => {
-            this.message= error.response.data.message
-          })
+        if (this.password==="") this.password = this.actualPassword
+        this.$axios
+        .post('/auth/login', {
+          email: this.email,
+          password: this.actualPassword
+        })
+        .then(() => {
+          this.$axios  
+            .put(`/auth/profile/${this.userId}`, {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+              password: this.password,
+            })
+            .then(() => {
+              this.$axios
+                .get(`/auth/profile/${sessionStorage.getItem('token')}`)
+                .then(response => {
+                  this.userId= response.data.user[0].id,
+                  this.userFirstName= response.data.user[0].firstName,
+                  this.userLastName= response.data.user[0].lastName,
+                  this.userEmail= response.data.user[0].email,
+                  this.messageOk= "Change done successfully!",
+                  this.password="",
+                  localStorage.setItem('name', this.firstName + '_' + this.lastName)
+                })
+            })
+            .catch(error => {
+              this.message= error.response.data.message
+            })
+        })
+        .catch(() => {
+          this.message= "Actual password wrong"
+        })
       }
     },
     deleteUser() {
@@ -212,6 +237,9 @@ span {
   font-weight: 600;
 }
 
+input {
+  font-size: 16px;
+}
 .sixty-width {
   width:60%
 }
