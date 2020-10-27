@@ -58,9 +58,9 @@ exports.getOnePost = (req, res) => {
                     conn.query(`SELECT * FROM likes WHERE postId=? AND type=?`, [req.params.id, -1], function(errors,dislikes) {
                         if (errors) return res.status(500).json({ error : errors });
                         return res.status(200).json({ post : result,
-                                                     commentaires : resultat,
-                                                     likes: likes,
-                                                     dislikes: dislikes
+                                                      commentaires : resultat,
+                                                      likes: likes,
+                                                      dislikes: dislikes
                                                     });
                     })
                 })
@@ -90,7 +90,7 @@ exports.myPosts = (req, res) => {
 }
 
 exports.modifyPost = (req, res) => {
-    if (req.params.id && req.body.title && req.body.imageUrl && req.body.userId) {
+    if (req.params.id && req.body.title && req.body.imageUrl) {
         const filename = req.body.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
             const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.body.imageUrl}`;

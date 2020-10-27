@@ -20,44 +20,40 @@
           <!-- Tout ce qui est relatif à la modification de données personnelles -->
           <div class="right-side">
             <form class="form-user">
-              <p class="mr-auto">Your first name:</p>
-              <p class="mr-auto"><span>{{ userFirstName }}</span></p>
+              <p>Your first name:</p>
+              <p><span>{{ userFirstName }}</span></p>
               <FormInputSettings idLinked="FirstName" 
                                 v-model="firstName"
                                 placeholder="Your new first name">
 
               </FormInputSettings>
 
-              <p class="mr-auto">Your last name:</p>
-              <p class="mr-auto"><span>{{ userLastName }}</span></p>
+              <p>Your last name:</p>
+              <p><span>{{ userLastName }}</span></p>
               <FormInputSettings idLinked="LastName" 
                                 v-model="lastName"
                                 placeholder="Your new last name">
-
               </FormInputSettings>
 
-              <p class="mr-auto">Your email:</p>
-              <p class="mr-auto"><span>{{ userEmail }}</span></p>
+              <p>Your email:</p>
+              <p><span>{{ userEmail }}</span></p>
               <FormInputSettings idLinked="Email" 
                                 v-model="email"
                                 placeholder="Your new email"
                                 patternLinked="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}">
-
               </FormInputSettings>
 
-              <p class="mr-auto">Your password:</p>   
+              <p>Your password:</p>   
               <FormInputSettings idLinked="Password" 
                                 v-model="password"
                                 placeholder="Your new password"
                                 required
                                 patternLinked="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-
               </FormInputSettings>
  
               <FormInputSettings idLinked="Password2" 
                                 v-model="password2"
                                 placeholder="Confirm your new password">
-
               </FormInputSettings>
             </form>
 
@@ -247,11 +243,13 @@ input {
 .right-side {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  text-align: left
 }
 
 .form-user {
-  width: 60%
+  width: 60%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media all and (max-width: 750px) {
@@ -269,7 +267,6 @@ input {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: start;
   }
 }
 </style>

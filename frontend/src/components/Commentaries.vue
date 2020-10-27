@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-light rounded-lg text-light mb-3 py-2 px-3 d-flex flex-end flex-column">
+  <div class="border border-light rounded-lg text-light mb-3 py-2 px-3 d-flex flex-end flex-column w-75">
 
     <div v-if="this.message===''"
          class="d-flex flex-row justify-content-between align-items-start">

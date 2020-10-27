@@ -4,7 +4,7 @@
           v-model="input" 
           :placeholder="placeholder" 
           :pattern="patternLinked"
-          class="full-width"
+          class="w-75"
           @input="sendData"> 
   </div>
 </template>
@@ -50,10 +50,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.full-width {
-  width: 100% 
-}
 
 input {
   font-size: 13px;

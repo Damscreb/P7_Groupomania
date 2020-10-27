@@ -1,15 +1,25 @@
 <!-- Seulement pour les posts sans commentaires (genre dans le fil d'actu) -->
 <template> 
-    <div class="border border-light rounded-lg text-light d-flex flex-column mx-auto mb-3 py-3 px-4">
+    <div class="border border-light rounded-lg text-light d-flex flex-column mx-auto mb-3 py-3 px-4 w-75">
       <div class="py-3 d-flex justify-content-between align-items-center">
         <h3>{{ title }}</h3>
 
-        <!-- On vérifie les conditions d'affichage du bouton delete -->
-        <button v-if="role === 'admin' || postUserId === userId"
-                class="btn btn-red"
-                @click="deletePost">
-          Delete
-        </button> 
+        <div class="d-flex flex-column">
+          <!-- On vérifie les conditions d'affichage du bouton modify -->
+          <router-link :to="routeUpdate">
+            <button v-if="postUserId === userId"
+                    class="btn btn-red mb-2"
+                    :id="postId">
+              Update
+            </button>
+          </router-link>
+          <!-- On vérifie les conditions d'affichage du bouton delete -->
+          <button v-if="role === 'admin' || postUserId === userId"
+                  class="btn btn-red"
+                  @click="deletePost">
+            Delete
+          </button> 
+        </div>
 
       </div>
       
@@ -32,7 +42,7 @@
           </div>
         </div>
 
-        <p v-if="this.message">
+        <p v-if="message">
           {{ message }}
         </p>
 
@@ -83,6 +93,7 @@ export default {
     return {
       message: "",
       route: "",
+      routeUpdate:"",
       likes: Number,
       dislikes: Number
     }
@@ -95,6 +106,7 @@ export default {
         this.dislikes= response.data.dislikes
       })
     this.route= "/post/" + `${this.postId}`
+    this.routeUpdate = "/postupdate/" + `${this.postId}`
   },
   methods: {
     createMessage() {

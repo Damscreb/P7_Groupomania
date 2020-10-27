@@ -2,7 +2,7 @@
   <div class="bg-darker pb-5 min-height">
     <Header/>
 
-    <div class="container" v-if="deleted === false">
+    <div class="container d-flex flex-column align-items-center" v-if="deleted === false">
       <PostWall v-for="post in posts"            
             :key="post.id"
             :postId="post.id"
@@ -17,12 +17,12 @@
 
 <!-- Si il n'y a pas de commentaire -->
       <p v-if="commentaries.length === 0"
-         class="text-light h3 pt-3">
+         class="text-light h3 pt-3 w-75">
         Rédigez le 1er commentaire!
       </p>
 
 <!-- Formulaire pour l'ajout de commentaire -->
-      <div class="d-flex flex-row justify-content-between align-items-end text-light border border-light rounded-lg p-3 mb-3">
+      <div class="d-flex flex-row justify-content-between align-items-end text-light border border-light rounded-lg p-3 mb-3 w-75">
 
         <div class="d-flex flex-column container">
           <form class="row">

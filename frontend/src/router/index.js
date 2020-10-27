@@ -7,6 +7,7 @@ import Post from "../views/Post.vue";
 import AccountPosts from "../views/AccountPosts.vue";
 import Settings from "../views/Settings.vue";
 import NewPost from "../views/NewPost.vue";
+import PostUpdate from "../views/PostUpdate.vue";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,11 @@ const router = new VueRouter({
       path: "/post/:id",
       name: "Post",
       component: Post
+    },
+    {
+      path: "/postupdate/:id",
+      name: "PostUpdate",
+      component: PostUpdate
     },
     {
       path: "/settings",
