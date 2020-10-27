@@ -18,8 +18,8 @@
           </div>
 
           <!-- Tout ce qui est relatif à la modification de données personnelles -->
-          <div class="d-flex flex-row justify-content-between">
-            <form class="d-flex flex-column sixty-width">
+          <div class="right-side">
+            <form class="form-user">
               <p class="mr-auto">Your first name:</p>
               <p class="mr-auto"><span>{{ userFirstName }}</span></p>
               <FormInputSettings idLinked="FirstName" 
@@ -244,10 +244,32 @@ input {
   width:60%
 }
 
+.right-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-user {
+  width: 60%
+}
+
 @media all and (max-width: 750px) {
   form>p {
     font-size: 14px;
     font-weight: 600
+  }
+
+  .right-side {
+    display: flex;
+    flex-direction: column
+  }
+
+  .form-user {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
   }
 }
 </style>

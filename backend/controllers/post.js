@@ -1,5 +1,6 @@
 // Il nous faut une nouvelle importation. Il s'agit du package fs de Node (pour la suppression du fichier image)
 const fs = require('fs');
+const { cpuUsage } = require('process');
 
 var conn = require('../mySqlConfig');
 
@@ -32,6 +33,19 @@ exports.createPost = (req, res) => {
         return res.status(500).json({ error : 'Mauvais arguments' });
     }
 }
+
+// exports.createPost = (req, res) => {
+//     if (req.body.userId && req.body.title && req.file.filename) {
+//         const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+//         conn.query('INSERT INTO posts (userId, title, date, imageUrl) VALUES (?, ?, NOW(), ?)', [req.body.userId, req.body.title, imageUrl], function(error) {
+//             if (error) return res.status(500).json({ error : 'Mauvais arguments' });
+//         })
+//         return res.status(200).json({ message : 'Post créé' })
+//     }
+//     else {
+//         return res.status(500).json({ error : 'Mauvais arguments' });
+//     }
+// }
 
 exports.getOnePost = (req, res) => {
     if (req.params.id) {

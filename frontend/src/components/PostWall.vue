@@ -1,7 +1,7 @@
 <!-- Seulement pour les posts sans commentaires (genre dans le fil d'actu) -->
 <template> 
     <div class="border border-light rounded-lg text-light d-flex flex-column mx-auto mb-3 py-3 px-4">
-      <div class="py-3 d-flex justify-content-between">
+      <div class="py-3 d-flex justify-content-between align-items-center">
         <h3>{{ title }}</h3>
 
         <!-- On vérifie les conditions d'affichage du bouton delete -->
@@ -168,6 +168,10 @@ p {
   }
 }
 
+h3 {
+  margin-bottom: 0px;
+}
+
 @media all and (max-width: 750px) {
   li>div>a {
     font-size: 15px;
@@ -182,6 +186,10 @@ p {
     &:hover {
       cursor: pointer;
     }
+  }
+
+  h3 {
+    font-size: 18px;
   }
 }
 </style>

@@ -6,16 +6,16 @@
       <div class="row">
         <div :class="borderClass">
           <form @submit.prevent="createPost">
-            <h2 :class="titleClass"><u>Nouveau Post</u></h2>
+            <h2 :class="titleClass"><u>New Post</u></h2>
 
             <div class="mb-4 d-flex flex-column px-3">
               <div class="text-left">
-                <label id="titleText" for="Title">Titre du post:</label>
+                <label id="titleText" for="Title">Post title:</label>
                 <FormInput idLinked="Title" v-model="title"></FormInput>
               </div>
 
               <div class="text-left">
-                <label for="Image">Image du post:</label>
+                <label for="Image">Post image:</label>
                 <FormInput idLinked="Image" v-model="imageUrl"></FormInput>
               </div>
             </div>
@@ -30,7 +30,7 @@
                     :class="btnClass"
                     to="Posts"
                     type="button">
-              Retour aux posts
+              Back to posts
             </router-link>
 
             <div v-if="message" class="mt-4">
@@ -41,7 +41,7 @@
             <button v-if=" message === '' "
                     :class="btnClass" 
                     type="submit">
-              Uploader
+              Upload
             </button>
 
           </form>
