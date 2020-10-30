@@ -14,10 +14,17 @@
                 <FormInput idLinked="Title" v-model="title"></FormInput>
               </div>
 
-              <div class="text-left">
-                <label for="Image">Post image:</label>
-                <FormInput idLinked="Image" v-model="imageUrl"></FormInput>
-              </div>
+              <form class="text-left"  enctype="multipart/form-data">
+                <label for="imgInput">Post image:</label><br/>
+                <input required 
+                       type="file" 
+                       ref="file" 
+                       id="newImage" 
+                       name="imgInput" 
+                       class="text-light"
+                       @change="selectImg($event)" 
+                       enctype="multipart/form-data"/>
+              </form>
             </div>
 
             <h3 v-if="message"
@@ -35,7 +42,7 @@
 
             <div v-if="message" class="mt-4">
               <h4>{{ title }}</h4>
-              <img :src="imageSrc" class="img-fluid">
+              <img :src="imageSrc" class="img-fluid" alt="Image new post"/>
             </div>
 
             <button v-if=" message === '' "
@@ -56,37 +63,45 @@ export default {
   data() {
     return {
       title: "",
-      imageUrl: "",
+      imageUrl: undefined,
       userId: "",
       message: "",
       btnClass: "btn btn-red",
       titleClass: "font-weight-bold h1 mb-4",
       borderClass: "container fifty-width border border-light p-3 text-light pb-4 col-10 col-sm-8 col-lg-6",
-      imageSrc: "",
-      imageTitle: ""
+      imageTitle: "",
+      imageSrc: null,
     }
   },
   methods: {
     createPost(e) {
       e.preventDefault()
+      const myForm = new FormData();
+      myForm.append("file", this.imageUrl);
+      myForm.append("title", this.title);
+
       this.$axios
       .get(`auth/profile/${sessionStorage.getItem('token')}`)
       .then(response => {
+
         this.userId= response.data.user[0].id
+        myForm.append("userId", this.userId);
+
         this.$axios
-          .post('posts/', {
-            title: this.title,
-            imageUrl: this.imageUrl,
-            userId: this.userId
+          .post('posts/', myForm)
+          .then(responses => {
+            this.message = responses.data.message,
+            this.btnClass= "btn btn-success",
+            this.titleClass= "font-weight-bold h1 mb-4 text-success",
+            this.borderClass= "container fifty-width border border-success p-3 text-light pb-4",
+            this.imageSrc= responses.data.imagePath,
+            this.imageTitle= this.title
           })
-          .then(response => this.message = response.data.message,
-                            this.btnClass= "btn btn-success",
-                            this.titleClass= "font-weight-bold h1 mb-4 text-success",
-                            this.borderClass= "container fifty-width border border-success p-3 text-light pb-4",
-                            this.imageSrc= this.imageUrl,
-                            this.imageTitle= this.title)
           .catch(error => this.message= error.data.message)
       })
+    },
+    selectImg() {
+      this.imageUrl = this.$refs.file.files[0]
     }
   }
 }

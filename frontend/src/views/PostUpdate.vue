@@ -10,20 +10,59 @@
         <img :src="post.imageUrl" class="not-too-big" alt="Post img"/>
       </div>
 
-      <div class="w-50">
+      <div class="w-50 ml-1">
         <p>After</p>
         <hr/>
-        <div class="my-4 pt-2">
-        <FormInputSettings idLinked="Title"
-                           v-model="newTitle"
-                           :placeholder="title">
-        </FormInputSettings>
+        <div class="mb-4">
+          <p :v-model="newTitle" class="h1"><u>{{newTitle}}</u></p>
+          <FormInputSettings idLinked="Title"
+                            v-model="newTitle"
+                            :placeholder="title"
+                            @input="alwaysTitle" >
+          </FormInputSettings>
+        </div>
+
+        <form class="mb-4" enctype="multipart/form-data">
+          <label class="h2" for="imgInput"><u>Post image</u></label><br/>
+          <input required 
+                  type="file" 
+                  ref="file" 
+                  id="newImage" 
+                  name="imgInput" 
+                  class="text-light"
+                  enctype="multipart/form-data"
+                  @change="selectImg($event)"/>
+        </form>
+
+        <div v-if="messageError"
+             class='text-danger h3 my-4'>
+          Choose an image please!
         </div>
 
         <button class="btn btn-red"
-                @click="updatePost">
+                @click="updatePost"
+                v-if="!messageOk">
           Save changes
         </button>
+
+        <div v-if="messageOk">
+          <h3 class="font-weight-bold h2 mb-4 text-success">
+            {{ messageOk }}
+          </h3>
+
+          <router-link
+                  name="back-to-posts"
+                  :class="btnClass"
+                  to="/posts"
+                  type="button">
+            Back to posts
+          </router-link>
+
+          <div class="mt-4">
+            <h4>{{ newTitle }}</h4>
+            <img :src="newImageSrc" class="img-fluid" alt="Image new post"/>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -37,11 +76,14 @@ export default {
       post: [],
       userId: Number,
       role: "",
-      message: "",
+      messageOk: "",
+      messageError: "",
       postId: Number,
       title: "",
-      newTitle: "",
-      newImage: ""
+      btnClass: "btn btn-primary text-light",
+      newTitle: "New title",
+      newImage: null,
+      newImageSrc: ""
     }
   },
   mounted() {
@@ -61,14 +103,25 @@ export default {
   },
   methods: {
     updatePost() {
-      this.$axios
-      .put(`posts/${this.postId}`, {
-        title : this.newTitle,
-        imageUrl: this.newImage
-      })
-      .then(response => {
-        console.log(response)
-      })
+      if (this.newImage===null) this.messageError= "Choose an image"
+      else {
+        const myForm = new FormData();
+        myForm.append("file", this.newImage);
+        myForm.append("title", this.newTitle);
+        myForm.append("oldImage", this.post.imageUrl)
+        this.$axios
+        .put(`posts/${this.postId}`, myForm)
+        .then(response => {
+          this.messageOk = response.data.message
+          this.newImageSrc= response.data.path
+        })
+      }
+    },
+    alwaysTitle() {
+      if (this.newTitle==="") this.newTitle = "New title"
+    },
+    selectImg() {
+      this.newImage = this.$refs.file.files[0]
     }
   }
 }

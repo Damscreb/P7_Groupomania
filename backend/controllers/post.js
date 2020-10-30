@@ -1,6 +1,5 @@
 // Il nous faut une nouvelle importation. Il s'agit du package fs de Node (pour la suppression du fichier image)
 const fs = require('fs');
-const { cpuUsage } = require('process');
 
 var conn = require('../mySqlConfig');
 
@@ -21,31 +20,22 @@ exports.getAllPosts = (req, res) => {
     )
 }
 
-// J'arrive à créer un post mais l'image ne se save pas, c'est parce que j'envoie juste une url et pas une image issue de mon ordi
+
 exports.createPost = (req, res) => {
-    if (req.body.userId && req.body.title && req.body.imageUrl) {
-        conn.query('INSERT INTO posts (userId, title, date, imageUrl) VALUES (?, ?, NOW(), ?)', [req.body.userId, req.body.title, req.body.imageUrl], function(error) {
+    if (req.body.userId && req.body.title) {
+        const image = `${req.protocol}://${req.get('host')}/images/${req.files[0].filename}`;
+        conn.query('INSERT INTO posts (userId, title, date, imageUrl) VALUES (?, ?, NOW(), ?)', [req.body.userId, req.body.title, image], function(error) {
             if (error) return res.status(500).json({ error : 'Mauvais arguments' });
         })
-        return res.status(200).json({ message : 'Post créé' })
+        return res.status(200).json({ 
+                                      message : 'Post créé',
+                                      imagePath : `${image}`
+                                    })
     }
     else {
         return res.status(500).json({ error : 'Mauvais arguments' });
     }
 }
-
-// exports.createPost = (req, res) => {
-//     if (req.body.userId && req.body.title && req.file.filename) {
-//         const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-//         conn.query('INSERT INTO posts (userId, title, date, imageUrl) VALUES (?, ?, NOW(), ?)', [req.body.userId, req.body.title, imageUrl], function(error) {
-//             if (error) return res.status(500).json({ error : 'Mauvais arguments' });
-//         })
-//         return res.status(200).json({ message : 'Post créé' })
-//     }
-//     else {
-//         return res.status(500).json({ error : 'Mauvais arguments' });
-//     }
-// }
 
 exports.getOnePost = (req, res) => {
     if (req.params.id) {
@@ -90,13 +80,16 @@ exports.myPosts = (req, res) => {
 }
 
 exports.modifyPost = (req, res) => {
-    if (req.params.id && req.body.title && req.body.imageUrl) {
-        const filename = req.body.imageUrl.split('/images/')[1];
+    if (req.params.id && req.body.title && req.body.oldImage) {
+        const filename = req.body.oldImage.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
-            const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.body.imageUrl}`;
-            conn.query('UPDATE posts SET title=?, imageUrl=? WHERE id=?', [req.body.title, imageUrl, req.params.id], function(result, error) {
-                if (error) return res.status(500).json({ error : 'Nique' });
-                return res.status(200).json({ message : 'Post modifié avec succès !' })
+            const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.files[0].filename}`;
+            conn.query('UPDATE posts SET title=?, date=NOW(), imageUrl=? WHERE id=?', [req.body.title, imageUrl, req.params.id], function(result, error) {
+                if (error.affectedRows!==1) return res.status(500).json({ error : error });
+                return res.status(200).json({
+                                        message : 'Post modifié avec succès !',
+                                        path: `${imageUrl}`
+                })
             })
         })
     }

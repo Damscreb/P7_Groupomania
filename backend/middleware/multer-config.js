@@ -5,7 +5,8 @@ const multer = require('multer');
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
-  'image/png': 'png'
+  'image/png': 'png',
+  'image/gif': 'gif'
 };
 
 const storage = multer.diskStorage({
@@ -28,4 +29,5 @@ const storage = multer.diskStorage({
 
 // Nous exportons ensuite l'élément multer entièrement configuré, lui passons notre constante storage et 
 // lui indiquons que nous gérerons uniquement les téléchargements de fichiers image
-module.exports = multer({storage: storage}).single('image');
+module.exports = multer({storage: storage}).any('image'); 
+// Le .any() permet d'envoyer x file avec x >= 0. Avait on avait single() qui n'en accepte que un -> pb
