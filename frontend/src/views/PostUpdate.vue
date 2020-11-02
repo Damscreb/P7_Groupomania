@@ -80,7 +80,7 @@ export default {
       messageError: "",
       postId: Number,
       title: "",
-      btnClass: "btn btn-primary text-light",
+      btnClass: "btn btn-success text-light",
       newTitle: "New title",
       newImage: null,
       newImageSrc: ""
