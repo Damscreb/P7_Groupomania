@@ -1,4 +1,4 @@
-:computer: # groupomania
+:computer: #groupomania
 Création réseau social Groupomania
 
 Les fonctionnalités importantes :
@@ -22,11 +22,11 @@ ______________________________________________
 Nous allons recréer la base de données.
 Connectez vous à MySQL avec vos identifiants, puis :
 
-Commande sql : CREATE DATABASE Groupomania;
+Commande sql: CREATE DATABASE Groupomania;
 
 ______________________________________________
 
-Création de la table users :
+Création de la table users:
 
 CREATE TABLE `users` (
   `id` smallint unsigned NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,7 @@ CREATE TABLE `users` (
 
 ______________________________________________
 
-Création de la table posts :
+Création de la table posts:
 
 CREATE TABLE `posts` (
   `id` smallint unsigned NOT NULL AUTO_INCREMENT,
@@ -59,7 +59,7 @@ CREATE TABLE `posts` (
 ______________________________________________
 
  
-Création de la table commentaries :
+Création de la table commentaries:
  
 CREATE TABLE `commentaries` (
   `id` smallint unsigned NOT NULL AUTO_INCREMENT,
@@ -77,7 +77,7 @@ CREATE TABLE `commentaries` (
  ______________________________________________
 
  
-Création de la table likes :
+Création de la table likes:
 
 CREATE TABLE `likes` (
   `id` smallint unsigned NOT NULL AUTO_INCREMENT,
@@ -93,22 +93,27 @@ CREATE TABLE `likes` (
  
 #########################################
  
-Retournons sur le projet, dans le terminal nous sommes dans le dossier groupomania
-Lancer les commandes suivantes :
+Retournons sur le projet, dans le terminal nous sommes dans le dossier groupomania.
+Lancer les commandes suivantes:
 - cd backend
 - npm install
     
 Création d'un fichier .env :
+
 DB_HOST=localhost
+
 DB_USER="Votre username MySQL"
+
 DB_PASS="Votre mot de passe MySQL"
+
 DB_DATABASE=groupomania
+
 TOKEN= "Créer votre propre Token"
 
 Installer ensuite nodemon : 
 - npm install -g nodemon
 
-Et on lance ensuite le backend (dans le terminal toujours) :
+Et on lance le backend (dans le terminal toujours) :
 - nodemon server
    
 
@@ -122,21 +127,28 @@ Votre backend est à présent opérationnel
 Dans un nouveau terminal ouvert depuis le dossier groupomania,
 utiliser la commande suivante : 
 - cd frontend
+
 Puis :
+
 - npm install
+
 Et finalement :
+
 - npm run serve
 
 ##########################
 
 Pour créer un compte admin :
+
 Il suffit de créer un compte grâce au site sur la page signup
+
 Allez ensuite dans MySQL où il faut rentrer le code suivant :
 
+``
 UPDATE users
 SET role = "admin"
 WHERE id = "(l’id du compte à passer en admin)";
-
+``
 
 Par défaut le serveur client est accessible en local via le port 8080: http://localhost:8080/
 
