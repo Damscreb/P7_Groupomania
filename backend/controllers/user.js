@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
 
 var conn = require('../mySqlConfig');
+require('dotenv').config();
 
 exports.signup = (req, res, next) => {
   if (req.body.firstName && req.body.lastName && req.body.email && req.body.password) {
@@ -45,7 +46,7 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
   if (req.body.email && req.body.password) {
     conn.query(`SELECT * FROM users WHERE email=?`, [req.body.email], function(err, response) {
-      if (response[0].length === 0) return res.status(500).json({ error : err });
+      if (response.length===0) return res.status(400).json({ message: "Invalid username" });
       bcrypt.compare(req.body.password, response[0].password, function(err, result) {
         if(result) {
           const token = jwt.sign(
@@ -54,14 +55,14 @@ exports.login = (req, res, next) => {
                           { expiresIn: '24h' } )
           conn.query(`UPDATE users SET lastUpdate=now() WHERE id = ?`, [response[0].id]);
           return res.status(200).send({
-            msg: "Connexion réussie!",
+            message: "Connexion réussie!",
             token,
             user: response[0]
           });
           
         }
         else {
-          return res.status(400).json({ message: "Invalid Password" });
+          return res.status(400).json({ message: "Invalid u" });
         }
       })
     })

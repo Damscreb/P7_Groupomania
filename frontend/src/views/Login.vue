@@ -64,14 +64,24 @@ export default {
         .then(response => {
           sessionStorage.setItem("token", response.data.token),
           localStorage.setItem("name", response.data.user.firstName + "_" +response.data.user.lastName),
-          this.messageConnection = response.data.msg,
+          this.messageConnection = response.data.message,
           this.$axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token,
           setTimeout(function () { this.$router.push({ name: 'Posts' }) }.bind(this), 2000)
                              
         })
-        .catch(error => this.messageConnection = "Identifiants erronés")
-        
+        .catch(error => {
+          if (error.response.status===429) {
+            this.messageConnection=error.response.data
+          }
+          else {
+            this.messageConnection = "Invalid username!"
+          }
+        })
     }
+  },
+  mounted() {
+    sessionStorage.removeItem('token')
+    localStorage.removeItem('name')
   }
 }
 </script>
