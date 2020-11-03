@@ -1,4 +1,5 @@
 :computer: #groupomania
+
 Création réseau social Groupomania
 
 Les fonctionnalités importantes :
@@ -10,6 +11,7 @@ Les fonctionnalités importantes :
 
  
 Tout d'abord il faut cloner le repo : https://github.com/Damscreb/P7_Groupomania
+
 Puis entrons dans le dossier Groupomania grâce au terminal ou à l'invite de commande :
 
 cd groupomania
@@ -20,9 +22,13 @@ ______________________________________________
 :arrow_right: Backend: 
 
 Nous allons recréer la base de données.
-Connectez vous à MySQL avec vos identifiants, puis :
 
-Commande sql: CREATE DATABASE Groupomania;
+Connectez vous à MySQL avec vos identifiants, puis:
+
+Commande sql: 
+``
+CREATE DATABASE Groupomania;
+``
 
 ______________________________________________
 
@@ -122,7 +128,7 @@ Votre backend est à présent opérationnel
 #########################################
 
 
-:heavy_check_mark: Frontend:
+:arrow_right: Frontend:
 
 Dans un nouveau terminal ouvert depuis le dossier groupomania,
 utiliser la commande suivante : 
