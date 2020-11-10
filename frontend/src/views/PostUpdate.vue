@@ -86,6 +86,11 @@ export default {
       newImageSrc: ""
     }
   },
+  created() {
+    if (sessionStorage.getItem('token')===null) {
+      this.$router.push({ name: 'Login' })
+    }
+  },
   mounted() {
     this.$axios
       .get(`auth/profile/${sessionStorage.getItem('token')}`)

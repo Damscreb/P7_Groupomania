@@ -124,6 +124,11 @@ export default {
       messageDelete: ""
     }
   },
+  created() {
+    if (sessionStorage.getItem('token')===null) {
+      this.$router.push({ name: 'Login' })
+    }
+  },
   mounted() {
     this.$axios
       .get(`auth/profile/${sessionStorage.getItem('token')}`)

@@ -31,6 +31,11 @@ export default {
     backToLogin() {
       this.$router.push({ name: 'Login' })
     }
+  },
+  created() {
+    if (sessionStorage.getItem('token')===null) {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

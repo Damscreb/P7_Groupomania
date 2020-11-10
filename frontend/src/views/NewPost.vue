@@ -73,6 +73,11 @@ export default {
       imageSrc: null,
     }
   },
+  created() {
+    if (sessionStorage.getItem('token')===null) {
+      this.$router.push({ name: 'Login' })
+    }
+  },
   methods: {
     createPost(e) {
       e.preventDefault()
