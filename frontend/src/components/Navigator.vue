@@ -8,6 +8,9 @@
       <li class="nav-item my-1 p-2" id="second">
         <MessageRouter msg="My Posts" route="/settings/posts"></MessageRouter>
       </li>
+      <li class="nav-item my-1 p-2" id="third">
+        <MessageRouter msg="Disconnect" route="/settings/disconnect"></MessageRouter>
+      </li>
     </ul>
   </div>
 </template>

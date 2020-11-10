@@ -53,7 +53,8 @@
  
               <FormInputSettings idLinked="Password2" 
                                 v-model="password2"
-                                placeholder="Confirm your new password">
+                                placeholder="Confirm your new password"
+                                required>
               </FormInputSettings>
             </form>
 

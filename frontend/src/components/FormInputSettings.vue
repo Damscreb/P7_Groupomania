@@ -42,7 +42,7 @@ export default {
     if (this.$props.idLinked === "Email") {
       this.$el.firstChild.type = "email"
     }
-    if (this.$props.idLinked === "Password2") {
+    if (this.$props.idLinked === "Password2" || this.$props.idLinked === "Password") {
       this.$el.firstChild.type = "password"
     }
   }
